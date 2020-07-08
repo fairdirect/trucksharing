@@ -1,0 +1,28 @@
+version: '3'
+services:
+  marketplace_db:
+    image: postgres:9.5.22
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./tmp/marketplace_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: marketplace_db_pass
+  logistics_db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./tmp/logistics_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: logistics_db_pass
+  web_api:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/ofb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - marketplace_db
+      - logistics_db
