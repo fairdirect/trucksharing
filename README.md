@@ -1,24 +1,21 @@
-# README
+# Open Food Bank - logistics app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Domain
 
-Things you may want to cover:
+### Why?
 
-* Ruby version
+### What?
 
-* System dependencies
+### How?
 
-* Configuration
+## Architecture
 
-* Database creation
+### Inspiration
+https://web-crunch.com/posts/ruby-on-rails-api-vue-js
 
-* Database initialization
+### Back-end: Ruby on Rails 5.2
 
-* How to run the test suite
+### Front-end: Vue.js
 
-* Services (job queues, cache servers, search engines, etc.)
+## Useful links
 
-* Deployment instructions
-
-* ...
