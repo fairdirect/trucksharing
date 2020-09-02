@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       resource :recipient, only: [] do
         get :authorised
       end
+
+      resource :service_provider, only: [] do
+        get :authorised
+      end
     end
   end
 end
