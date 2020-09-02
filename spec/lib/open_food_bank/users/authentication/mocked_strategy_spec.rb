@@ -10,7 +10,7 @@ RSpec.describe "Mocked Authentication Strategy" do
     context "when no user has the provided token" do
       let(:token) { "e42f7bef-b85d-46d0-ae0c-2f2ab6d0ece8" }
 
-      it { expect{subject}.to raise_error(OpenFoodBank::Users::Authentication::AbstractStrategy::UnknownTokenError) }
+      it { expect{subject}.to raise_error(OpenFoodBank::Users::Authentication::UnknownTokenError) }
     end
 
     context "when provided token matches a user" do
