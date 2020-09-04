@@ -5,6 +5,14 @@ Rails.application.routes.draw do
       resource :user, only: [] do
         get :profile
       end
+
+      resource :recipient, only: [] do
+        get :authorised
+      end
+
+      resource :service_provider, only: [] do
+        get :authorised
+      end
     end
   end
 end

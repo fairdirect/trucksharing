@@ -2,11 +2,12 @@ module Api
   module V1
     class UsersController < ApplicationController
       class NoAuthenticationHeaderError < StandardError; end
-
       before_action :authenticate_user!
 
+      attr_reader :user
+
       def profile
-        render json: @user
+        render json: user
       end
 
       private

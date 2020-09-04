@@ -1,9 +1,9 @@
 module OpenFoodBank
   module Users
     module Authentication
-      class AbstractStrategy
-        class UnknownTokenError < StandardError; end
+      class UnknownTokenError < StandardError; end
 
+      class AbstractStrategy
         def initialize(user_repository:)
           @user_repository = user_repository
         end
