@@ -29,6 +29,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 
 gem 'jwt_sessions', '~> 2.3'
+gem 'jsonapi-serializer'
 
 group :development, :test do
   gem 'rspec-rails', '~> 4.0.0'
