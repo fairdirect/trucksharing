@@ -23,12 +23,12 @@ module Api
 
         def authenticate_user!
           @user = authentication_strategy.authenticate(http_auth_header)
-        rescue NoAuthenticationHeaderError, ::OpenFoodBank::Users::Authentication::UnknownTokenError
+        rescue NoAuthenticationHeaderError, Users::Authentication::UnknownTokenError
           render status: :unauthorized
         end
 
         def authentication_strategy
-          @authentication_strategy ||= ::OpenFoodBank::Users::Authentication::MockedStrategy.new
+          @authentication_strategy ||= Users::Authentication::MockedStrategy.new
         end
     end
   end
