@@ -3,6 +3,9 @@ require_relative "repository_response"
 
 module Recipients
   module ShippingRequests
+    class RecordNotFound < StandardError
+    end
+
     class MockedRepository
       MOCKED_RECORDS = [
         {
@@ -34,6 +37,12 @@ module Recipients
       def fetch(user_id:)
         records = user_records(user_id).map { |rec| OpenStruct.new(rec) }
         RepositoryResponse.new(hits: records, total: total(user_id))
+      end
+
+      def find(user_id:, id:)
+        record = user_records(user_id).find { |rec| rec[:id] == id }
+        raise RecordNotFound if record.nil?
+        OpenStruct.new(record)
       end
 
       private

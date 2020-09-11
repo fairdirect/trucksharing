@@ -8,12 +8,26 @@ module Api
           render json: serialized_collection, status: :ok
         end
 
+        def show
+          render json: serialized_item, status: :ok
+        rescue ::Recipients::ShippingRequests::RecordNotFound
+          render status: :not_found
+        end
+
         private
 
         def serialized_collection
           options = { is_collection: true }
           options[:meta] = { total: query_response.total }
           ::Recipients::ShippingRequests::JsonapiSerializer.new(query_response.hits, options).serializable_hash
+        end
+
+        def serialized_item
+          ::Recipients::ShippingRequests::JsonapiSerializer.new(shipping_request).serializable_hash
+        end
+
+        def shipping_request
+          @shipping_request ||= repository.find(user_id: recipient.id, id: params[:id].to_i)
         end
 
         def query_response
