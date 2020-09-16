@@ -9,14 +9,12 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
     let(:expected_response) do
       {
         "data"=> {
-          "attributes" => {
-            "cargo_type"=>"solid",
-            "cargo_volume"=>"4 palletes",
+          "attributes"=>{
             "donation_date"=>"2020-09-08T12:00:05.000+00:00",
-            "id"=>shipping_request_id,
-            "order_number"=>"BCDSE",
-            "status"=>"in_process",
-            "weight"=>"1280 kg"
+            "id"=>1,
+            "order_number"=>"26f0346684435c8d87955fe5",
+            "status"=>"status",
+            "weight"=>"6000 kg"
           },
           "id"=>"1",
           "type"=>"shipping_request"
@@ -26,7 +24,7 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
 
     context "when the shipping request exists for the recipitne" do
       let(:requested_shipping_request_id) { shipping_request_id }
-      it "responses with a list of shipping requests following JSON:API standard" do
+      it "responses with a shipping request following JSON:API standard" do
         expect(subject).to eq 200
         expect(JSON.parse(response.body)).to eq expected_response
       end
