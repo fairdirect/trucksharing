@@ -9,7 +9,7 @@ module Users
       end
 
       def authenticate(token)
-        found_user = user_repository.find(token: token)
+        found_user = user_repository.find_by_token(token: token)
 
         raise UnknownTokenError if found_user.nil?
 
