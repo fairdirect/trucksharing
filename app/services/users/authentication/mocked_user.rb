@@ -5,7 +5,7 @@ module Users
       SERVICE_PROVIDER_ROLE_NAME = "service_provider"
 
       def initialize(token: "2e48afa0-ad6b-424b-b216-6ed41213d98a", id: 1, role: RECIPIENT_ROLE_NAME)
-        @id = 1
+        @id = id
         @token = token
         @role = role
       end
