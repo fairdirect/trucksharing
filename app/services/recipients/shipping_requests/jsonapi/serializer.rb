@@ -7,7 +7,12 @@ module Recipients
         set_id      :id
         attributes  :order_number, :status
 
-        has_one     :delivery_addr, serializer: DeliveryAddressSerializer
+        link :public_url do |shipping_request|
+          "/api/v1/recipients/shipping_requests/#{shipping_request.id}"
+        end
+
+        belongs_to  :delivery_addr, serializer: DeliveryAddressSerializer
+        belongs_to  :shop, serializer: ShopSerializer
 
         attribute   :donation_date do |sh_req|
           sh_req.created

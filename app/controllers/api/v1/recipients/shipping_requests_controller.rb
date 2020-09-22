@@ -23,7 +23,9 @@ module Api
         end
 
         def serialized_item
-          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(shipping_request).serializable_hash
+          options = {}
+          options[:include] = [:delivery_addr, :shop]
+          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(shipping_request, options).serializable_hash
         end
 
         def shipping_request

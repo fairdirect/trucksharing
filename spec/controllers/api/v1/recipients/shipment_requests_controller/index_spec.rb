@@ -5,14 +5,12 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
     subject { get('/api/v1/recipients/shipping_requests', headers: headers) }
     let(:headers) { { "Authorisation" => token } }
     let(:token) { "2e48afa0-ad6b-424b-b216-6ed41213d98a" }
+    let(:expected_delivery_address) { { "data"=> { "id"=>"5", "type"=>"delivery_address" } } }
+    let(:expected_shop)             { {"data"=> { "id"=>"10", "type"=>"shop" } } }
     let(:expected_relationships) do
       {
-        "delivery_addr"=>{
-          "data"=>{
-            "id"=>"1",
-            "type"=>"delivery_address"
-          }
-        }
+        "delivery_addr"=> expected_delivery_address,
+        "shop"=> expected_shop
       }
     end
     let(:expected_response) do
@@ -27,6 +25,7 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
             },
             "id"=>"1",
             "relationships"=>expected_relationships,
+            "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/1"},
             "type"=>"shipping_request"
           },
           {
@@ -38,6 +37,7 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
             },
             "id"=>"2",
             "relationships"=>expected_relationships,
+            "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/2"},
             "type"=>"shipping_request"
           }
         ],

@@ -4,7 +4,7 @@ module Recipients
       class DeliveryAddressSerializer < ::AbstractJsonapiSerializer
         set_type    :delivery_address
         set_id      :id
-        attributes  :id, :gender, :company, :firstname, :name, :street, :house, :zip, :city, :country
+        attributes  :gender, :company, :firstname, :name, :street, :house, :zip, :city, :country
       end
     end
   end

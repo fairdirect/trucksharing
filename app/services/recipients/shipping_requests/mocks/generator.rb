@@ -10,9 +10,11 @@ module Recipients
   module ShippingRequests
     module Mocks
       class Generator
-        def generate_record(id:, user_id:, created_at: DateTime.new(2020,9,8,12,0,5), order_number: SecureRandom.hex(12))
+        def generate_record(id:, delivery_addr_id: 5, shop_id: 10, user_id:, created_at: DateTime.new(2020,9,8,12,0,5), order_number: SecureRandom.hex(12))
           Mocks::Record.new(
             id,
+            delivery_addr_id,
+            shop_id,
             user_id,
             :status,
             created_at,
@@ -29,7 +31,7 @@ module Recipients
         def generate_products
           [
             Mocks::Product.new(
-              1,
+              2,
               15,
               "pallet",
               "solid",
@@ -37,7 +39,7 @@ module Recipients
               "Canned salmon"
             ),
             Mocks::Product.new(
-              2,
+              3,
               5,
               "pallet",
               "liquid",
@@ -49,7 +51,7 @@ module Recipients
 
         def generate_delivery_addr
           Mocks::Address.new(
-            1, :gender, "Awesome Foundation",
+            5, :gender, "Awesome Foundation",
             "Lucas", "Blau", "Notreal Str", "1", "7000", "Leipzig", "DE"
           )
         end
@@ -60,7 +62,7 @@ module Recipients
 
         def generate_shop
           Mocks::Shop.new(
-            1, "Incredible Shop - Berlin", SecureRandom.hex(12), SecureRandom.hex(12),
+            10, "Incredible Shop - Berlin", "5d56efa2732ff1efb5f1383c", "6ae7f6cf5ef17e7bc334019b",
             "Incredible Shop Inc.", "Fake Street", "12", "10115", "Berlin", "+49 699-999-999", nil,
             :register_id, :register_court, :office, :representative,
             :eco_control_board, :eco_control_id, "DE"
