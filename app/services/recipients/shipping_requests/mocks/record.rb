@@ -6,6 +6,10 @@ module Recipients
         :shop, :delivery_addr, :billing_addr, :products
       ) do
 
+        def delivery_addr_id
+          delivery_addr.id
+        end
+
         def weight
           products.sum(&:weight)
         end

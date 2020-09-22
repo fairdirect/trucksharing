@@ -49,7 +49,7 @@ module Recipients
 
         def generate_delivery_addr
           Mocks::Address.new(
-            :gender, "Awesome Foundation",
+            1, :gender, "Awesome Foundation",
             "Lucas", "Blau", "Notreal Str", "1", "7000", "Leipzig", "DE"
           )
         end

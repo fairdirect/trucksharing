@@ -1,4 +1,4 @@
-require "recipients/shipping_requests/jsonapi_serializer"
+require "recipients/shipping_requests/jsonapi/serializer"
 
 module Api
   module V1
@@ -19,11 +19,11 @@ module Api
         def serialized_collection
           options = { is_collection: true }
           options[:meta] = { total: query_response.total }
-          ::Recipients::ShippingRequests::JsonapiSerializer.new(query_response.hits, options).serializable_hash
+          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(query_response.hits, options).serializable_hash
         end
 
         def serialized_item
-          ::Recipients::ShippingRequests::JsonapiSerializer.new(shipping_request).serializable_hash
+          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(shipping_request).serializable_hash
         end
 
         def shipping_request

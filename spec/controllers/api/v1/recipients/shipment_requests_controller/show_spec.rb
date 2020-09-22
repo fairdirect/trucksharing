@@ -8,15 +8,22 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
     let(:shipping_request_id) { 1 }
     let(:expected_response) do
       {
-        "data"=> {
+        "data" => {
           "attributes"=>{
             "donation_date"=>"2020-09-08T12:00:05.000+00:00",
-            "id"=>1,
             "order_number"=>"26f0346684435c8d87955fe5",
             "status"=>"status",
             "weight"=>"6000 kg"
           },
           "id"=>"1",
+          "relationships"=>{
+            "delivery_addr"=>{
+              "data"=>{
+                "id"=>"1",
+                "type"=>"delivery_address"
+              }
+            }
+          },
           "type"=>"shipping_request"
         }
       }
