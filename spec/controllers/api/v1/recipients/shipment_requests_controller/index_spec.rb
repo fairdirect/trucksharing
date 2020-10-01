@@ -5,44 +5,40 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
     subject { get('/api/v1/recipients/shipping_requests', headers: headers) }
     let(:headers) { { "Authorisation" => token } }
     let(:token) { "2e48afa0-ad6b-424b-b216-6ed41213d98a" }
-    let(:expected_delivery_address) { { "data"=> { "id"=>"5", "type"=>"delivery_address" } } }
-    let(:expected_shop)             { {"data"=> { "id"=>"10", "type"=>"shop" } } }
-    let(:expected_relationships) do
-      {
-        "delivery_addr"=> expected_delivery_address,
-        "shop"=> expected_shop
-      }
+    let!(:expected_data) do
+      3.times.map do
+        shipping_request = FactoryBot.create(:shipping_request, user_id: 1)
+        {
+          "attributes" => {
+            "delivery_city"=>         shipping_request.delivery_city,
+            "delivery_company_name"=> shipping_request.delivery_company_name,
+            "delivery_country"=>      shipping_request.delivery_country,
+            "delivery_house"=>        shipping_request.delivery_house,
+            "delivery_street"=>       shipping_request.delivery_street,
+            "delivery_zip"=>          shipping_request.delivery_zip,
+            "pickup_city"=>           shipping_request.pickup_city,
+            "pickup_company_name"=>   shipping_request.pickup_company_name,
+            "pickup_country"=>        shipping_request.pickup_country,
+            "pickup_house"=>          shipping_request.pickup_house,
+            "pickup_street"=>         shipping_request.pickup_street,
+            "pickup_zip"=>            shipping_request.pickup_zip,
+            "donation_date"=>         shipping_request.donation_date.to_date.to_s(:db),
+            "delivery_deadline"=>     shipping_request.delivery_deadline.to_date.to_s(:db),
+            "order_number"=>          shipping_request.order_number,
+            "status"=>                shipping_request.status,
+            "weight"=>                "#{shipping_request.weight} kg"
+          },
+          "id"=>shipping_request.id.to_s,
+          "type"=>"shipping_request",
+          "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/#{shipping_request.id}"}
+        }
+      end
     end
     let(:expected_response) do
       {
-        "data" => [
-          {
-            "attributes"=>{
-              "donation_date"=>"2020-09-08T12:00:05.000+00:00",
-              "order_number"=>"26f0346684435c8d87955fe5",
-              "status"=>"status",
-              "weight"=>"6000 kg"
-            },
-            "id"=>"1",
-            "relationships"=>expected_relationships,
-            "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/1"},
-            "type"=>"shipping_request"
-          },
-          {
-            "attributes"=>{
-              "donation_date"=>"2020-09-08T12:00:05.000+00:00",
-              "order_number"=>"8bac9c9e975d8ddbcc0d9c1c",
-              "status"=>"status",
-              "weight"=>"6000 kg"
-            },
-            "id"=>"2",
-            "relationships"=>expected_relationships,
-            "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/2"},
-            "type"=>"shipping_request"
-          }
-        ],
+        "data" => expected_data,
         "meta" => {
-          "total"=>2
+          "total"=>3
         }
       }
     end

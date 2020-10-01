@@ -7,7 +7,7 @@ module Api
         def create
           sh_en = shipping_requests_service.enquire(recipient, shipping_request_id, service_provider_id)
           render json: serialized_item(sh_en), status: :created
-        rescue ::Recipients::ShippingRequests::RecordNotFound
+        rescue ActiveRecord::RecordNotFound
           render status: :not_found
         end
 

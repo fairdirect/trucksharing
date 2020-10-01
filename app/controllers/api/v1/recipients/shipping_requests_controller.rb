@@ -10,7 +10,7 @@ module Api
 
         def show
           render json: serialized_item, status: :ok
-        rescue ::Recipients::ShippingRequests::RecordNotFound
+        rescue ActiveRecord::RecordNotFound
           render status: :not_found
         end
 
@@ -18,26 +18,20 @@ module Api
 
         def serialized_collection
           options = { is_collection: true }
-          options[:meta] = { total: query_response.total }
-          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(query_response.hits, options).serializable_hash
+          options[:meta] = { total: query_response.count }
+          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(query_response, options).serializable_hash
         end
 
         def serialized_item
-          options = {}
-          options[:include] = [:delivery_addr, :shop]
-          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(shipping_request, options).serializable_hash
+          ::Recipients::ShippingRequests::Jsonapi::Serializer.new(shipping_request).serializable_hash
         end
 
         def shipping_request
-          @shipping_request ||= repository.find(user_id: recipient.id, id: params[:id].to_i)
+          @shipping_request ||= Logistics::ShippingRequest.find_by!(user_id: recipient.id, id: params[:id].to_i)
         end
 
         def query_response
-          @query_response ||= repository.fetch(user_id: recipient.id)
-        end
-
-        def repository
-          @repository ||= ::Recipients::ShippingRequests::MockedRepository.new
+          @query_response ||= Logistics::ShippingRequest.where(user_id: recipient.id)
         end
       end
     end

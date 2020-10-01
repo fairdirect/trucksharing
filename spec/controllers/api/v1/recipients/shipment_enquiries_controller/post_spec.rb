@@ -7,7 +7,8 @@ RSpec.describe "Enquiring Shipping", type: :request do
     let(:token) { "2e48afa0-ad6b-424b-b216-6ed41213d98a" }
 
     context "when params represent a valid enquiry" do
-      let(:params) { { shipping_enquiry: { shipping_request_id: 1, service_provider_id: 2 } } }
+      let(:shipping_request) { FactoryBot.create(:shipping_request, user_id: 1) }
+      let(:params) { { shipping_enquiry: { shipping_request_id: shipping_request.id, service_provider_id: 2 } } }
 
       it "responses with a shipping enquiry in JSON:API standard" do
         expect(subject).to eq 201
@@ -23,7 +24,7 @@ RSpec.describe "Enquiring Shipping", type: :request do
     end
 
     context "when params point to objects that do not exist" do
-      let(:params) { { shipping_enquiry: { shipping_request_id: 5, service_provider_id: 2 } } }
+      let(:params) { { shipping_enquiry: { shipping_request_id: -1, service_provider_id: 2 } } }
 
       it { expect(subject).to eq 404 }
     end

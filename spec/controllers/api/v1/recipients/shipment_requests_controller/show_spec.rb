@@ -5,82 +5,42 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
     subject { get("/api/v1/recipients/shipping_requests/#{requested_shipping_request_id}", headers: headers) }
     let(:headers) { { "Authorisation" => token } }
     let(:token) { "2e48afa0-ad6b-424b-b216-6ed41213d98a" }
-    let(:shipping_request_id) { 1 }
-    let(:expected_includes) do
-      [
-        {
-          "attributes"=>{
-            "city"=>"Leipzig",
-            "company"=>"Awesome Foundation",
-            "country"=>"DE",
-            "firstname"=>"Lucas",
-            "gender"=>"gender",
-            "house"=>"1",
-            "name"=>"Blau",
-            "street"=>"Notreal Str",
-            "zip"=>"7000"},
-          "id"=>"5",
-          "type"=>"delivery_address"
-        },
-        {
-          "attributes"=>{
-            "city"=>"Berlin",
-            "company"=>"Incredible Shop Inc.",
-            "country"=>"DE",
-            "eco_control_board"=>"eco_control_board",
-            "eco_control_id"=>"eco_control_id",
-            "fax"=>nil,
-            "house"=>"12",
-            "name"=>"Incredible Shop - Berlin",
-            "office"=>"office",
-            "phone"=>"+49 699-999-999",
-            "register_court"=>"register_court",
-            "register_id"=>"register_id",
-            "representative"=>"representative",
-            "salestax_id"=>"6ae7f6cf5ef17e7bc334019b",
-            "street"=>"Fake Street",
-            "taxnumber"=>"5d56efa2732ff1efb5f1383c",
-            "zip"=>"10115"
-          },
-          "id"=>"10",
-          "type"=>"shop"
-        }
-      ]
+    let!(:shipping_request) do
+      FactoryBot.create(:shipping_request, user_id: 1)
     end
 
+    let(:shipping_request_id) { 1 }
     let(:expected_response) do
       {
         "data" => {
           "attributes" => {
-            "donation_date"=>"2020-09-08T12:00:05.000+00:00",
-            "order_number"=>"26f0346684435c8d87955fe5",
-            "status"=>"status",
-            "weight"=>"6000 kg"
+            "delivery_city"=>         shipping_request.delivery_city,
+            "delivery_company_name"=> shipping_request.delivery_company_name,
+            "delivery_country"=>      shipping_request.delivery_country,
+            "delivery_house"=>        shipping_request.delivery_house,
+            "delivery_street"=>       shipping_request.delivery_street,
+            "delivery_zip"=>          shipping_request.delivery_zip,
+            "pickup_city"=>           shipping_request.pickup_city,
+            "pickup_company_name"=>   shipping_request.pickup_company_name,
+            "pickup_country"=>        shipping_request.pickup_country,
+            "pickup_house"=>          shipping_request.pickup_house,
+            "pickup_street"=>         shipping_request.pickup_street,
+            "pickup_zip"=>            shipping_request.pickup_zip,
+            "donation_date"=>         shipping_request.donation_date.to_date.to_s(:db),
+            "delivery_deadline"=>     shipping_request.delivery_deadline.to_date.to_s(:db),
+            "order_number"=>          shipping_request.order_number,
+            "status"=>                shipping_request.status,
+            "weight"=>                "#{shipping_request.weight} kg"
           },
-          "id"=>"1",
-          "relationships" => {
-            "delivery_addr" => {
-              "data" => {
-                "id"=>"5",
-                "type"=>"delivery_address"
-              }
-            },
-            "shop" => {
-              "data" => {
-                "id"=>"10",
-                "type"=>"shop"
-              }
-            }
-          },
+          "id"=>shipping_request.id.to_s,
           "type"=>"shipping_request",
-          "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/1"}
-        },
-       "included" => expected_includes
+          "links"=>{"public_url"=>"/api/v1/recipients/shipping_requests/#{requested_shipping_request_id}"}
+        }
       }
     end
 
     context "when the shipping request exists for the recipitne" do
-      let(:requested_shipping_request_id) { shipping_request_id }
+      let(:requested_shipping_request_id) { shipping_request.id }
       it "responses with a shipping request following JSON:API standard" do
         expect(subject).to eq 200
         expect(JSON.parse(response.body)).to eq expected_response
@@ -88,7 +48,7 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
     end
 
     context "when the shipping request does not exist for the recipient" do
-      let(:requested_shipping_request_id) { 423 }
+      let(:requested_shipping_request_id) { -1 }
       it { expect(subject).to eq 404 }
     end
   end
