@@ -13,13 +13,26 @@ default: &default
   pool: 5
 
 development:
-  <<: *default
-  database: ofb_development
+  logistics_db:
+    <<: *default
+    database: ofb_development
+  logistics_db_replica:
+    <<: *default
+    database: ofb_development
 
 test:
-  <<: *default
-  database: ofb_test
+  logistics_db:
+    <<: *default
+    database: ofb_test
+  logistics_db_replica:
+    <<: *default
+    database: ofb_test
 
 production:
-  <<: *default
-  database: ofb_production
+  logistics_db:
+    <<: *default
+    database: ofb_production
+  logistics_db_replica:
+    <<: *default
+    database: ofb_production
+
