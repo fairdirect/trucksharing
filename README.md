@@ -1,5 +1,22 @@
 # Open Food Bank - logistics app
 
+## Development
+
+### Setting up
+
+#### Docker
+
+* `docker-compose build` - compose your container
+* `docker-compore run web_api rails db:create` - create your databases
+
+#### Marketplace Database
+
+* `docker-compose run web_api bash` - enter to the command line of your container and load an `.sql` file to your database with the Epelia schema by using `psql -U postgres epelia_development <  db/marketplace_db/epelia.sql -h marketplace_db`. You will be prompted to provide your database password.
+
+#### Seeds
+
+* `docker-compose run web_api rails db:seed`
+
 ## Domain
 
 ### Why?
@@ -23,7 +40,7 @@ We have three images: `web_api`, `logistics_db` and `marketplace_db`
 * `logistics_db` - database for the Ruby on Rails API server.
 * `marketplace_db` - database with a schema of an existings application.
 
-### Back-end: Ruby on Rails 5.2
+### Back-end: Ruby on Rails 6.0.3.3
 
  We use JWT tokens for user authentication https://github.com/tuwukee/jwt_sessions which are stored on the marketplace application's database.
 

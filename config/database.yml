@@ -1,15 +1,17 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: logistics_db
   username: postgres
   password: logistics_db_pass
+  host: logistics_db
+  pool: 5
+
+marketplace: &marketplace
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password: marketplace_db_pass
+  host: marketplace_db
   pool: 5
 
 development:
@@ -19,6 +21,14 @@ development:
   logistics_db_replica:
     <<: *default
     database: ofb_development
+    replica: true
+  marketplace_db:
+    <<: *marketplace
+    database: epelia_development
+  marketplace_db_replica:
+    <<: *marketplace
+    database: epelia_development
+    replica: true
 
 test:
   logistics_db:
@@ -27,6 +37,16 @@ test:
   logistics_db_replica:
     <<: *default
     database: ofb_test
+    replica: true
+  marketplace_db:
+    <<: *marketplace
+    database: epelia_test
+  marketplace_db_replica:
+    <<: *marketplace
+    database: epelia_test
+    replica: true
+
+
 
 production:
   logistics_db:
@@ -35,4 +55,12 @@ production:
   logistics_db_replica:
     <<: *default
     database: ofb_production
+    replica: true
+  marketplace_db:
+    <<: *marketplace
+    database: epelia_production
+  marketplace_db_replica:
+    <<: *marketplace
+    database: epelia_production
+    replica: true
 
