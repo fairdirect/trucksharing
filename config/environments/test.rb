@@ -18,6 +18,10 @@ Rails.application.configure do
     'Cache-Control' => "public, max-age=#{1.hour.to_i}"
   }
 
+#  config.factory_bot.definition_file_paths = ["spec/factories",
+#                                              "spec/factories/logistics",
+#                                              "spec/factories/marketplace"]
+
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false

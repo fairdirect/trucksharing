@@ -1,5 +1,5 @@
 module Marketplace
-  class User < MarketplaceRecord
+  class Order < MarketplaceRecord
     self.table_name = "epelia_orders"
 
     belongs_to :user, class_name: "Marketplace::User"
