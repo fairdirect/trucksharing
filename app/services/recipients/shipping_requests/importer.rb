@@ -11,6 +11,10 @@ module Recipients
         @attributes_factory = attributes_factory
       end
 
+      def orders_for_import_count(recipient, from: DEFAULT_FROM_DAYS.days.ago, to: Time.zone.now)
+        orders_to_import(recipient.id, last_import_date(recipient, from)..to).count
+      end
+
       def import(recipient, from: DEFAULT_FROM_DAYS.days.ago, to: Time.zone.now)
         imported_orders = orders_to_import(recipient.id, last_import_date(recipient, from)..to)
 
