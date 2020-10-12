@@ -10,7 +10,6 @@ FactoryBot.define do
     house { Faker::Address.building_number }
     zip { Faker::Address.zip }
     city { Faker::Address.city }
-    country { %w(DE AT CH BE DK FR LI LU NL PL US).sample }
     status { "new" }
   end
 end

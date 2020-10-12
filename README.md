@@ -8,10 +8,7 @@
 
 * `docker-compose build` - compose your container
 * `docker-compore run web_api rails db:create` - create your databases
-
-#### Marketplace Database
-
-* `docker-compose run web_api bash` - enter to the command line of your container and load an `.sql` file to your database with the Epelia schema by using `psql -U postgres epelia_development <  db/marketplace_db/epelia.sql -h marketplace_db`. You will be prompted to provide your database password.
+* `docker-compore run web_api rails db:migrate` - create your databases
 
 #### Seeds
 

@@ -4,6 +4,7 @@ default: &default
   username: postgres
   password: logistics_db_pass
   host: logistics_db
+  migrations_paths: "db/migrate/logistics_db"
   pool: 5
 
 marketplace: &marketplace
@@ -11,6 +12,7 @@ marketplace: &marketplace
   encoding: unicode
   username: postgres
   password: marketplace_db_pass
+  migrations_paths: "db/migrate/marketplace_db"
   host: marketplace_db
   pool: 5
 
