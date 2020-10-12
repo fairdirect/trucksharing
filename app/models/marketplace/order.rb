@@ -1,5 +1,7 @@
 module Marketplace
   class Order < MarketplaceRecord
+    DEFAULT_FROM_DAYS = 14.freeze
+
     self.table_name = "epelia_orders"
 
     belongs_to :user,             class_name: "Marketplace::User"

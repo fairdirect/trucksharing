@@ -14,6 +14,12 @@ module Api
           render status: :not_found
         end
 
+        def schedule_import
+          imported_orders_count = importer.orders_for_import_count(recipient)
+          import_shipping_request(recipient.id) if imported_orders_count.positive?
+          render json: { shipping_requests_to_be_imported: imported_orders_count }, status: :ok
+        end
+
         private
 
         def serialized_collection
@@ -27,11 +33,19 @@ module Api
         end
 
         def shipping_request
-          @shipping_request ||= Logistics::ShippingRequest.find_by!(user_id: recipient.id, id: params[:id].to_i)
+          @shipping_request ||= ::Logistics::ShippingRequest.find_by!(user_id: recipient.id, id: params[:id].to_i)
         end
 
         def query_response
-          @query_response ||= Logistics::ShippingRequest.where(user_id: recipient.id)
+          @query_response ||= ::Logistics::ShippingRequest.where(user_id: recipient.id)
+        end
+
+        def import_shipping_request(recipient_id)
+          ::Recipients::ShippingRequests::ImportJob.perform_later(recipient_id)
+        end
+
+        def importer
+          @importer ||= ::Recipients::ShippingRequests::Importer.new
         end
       end
     end
