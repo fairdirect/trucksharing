@@ -1,58 +1,59 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": [
-        "plugin:react/recommended",
-        "plugin:prettier/recommended",
-        "prettier/@typescript-eslint",
-        "airbnb",
-        "plugin:import/errors",
-        "plugin:import/warnings",
-        "plugin:import/typescript"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "prettier/prettier": "error",
-        "react/jsx-indent": ["error", 2],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never"
-            }
-        ],
-        "quotes": ["error", "single"],
-        "max-len": [
-        "error",
-        {
-            "code": 120,
-            "ignoreComments": true,
-            "ignoreUrls": true
-        }
-        ],
-        "no-console": 2,
-        "no-unused-expressions": [
-        "error",
-        {
-            "allowShortCircuit": true,
-            "allowTernary": true
-        }
-        ]
-    }
+	"env": {
+		"browser": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		"plugin:prettier/recommended",
+		"prettier/@typescript-eslint",
+		"airbnb",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+		"plugin:import/typescript"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2021,
+		"sourceType": "module"
+	},
+	"plugins": ["react", "@typescript-eslint"],
+	"rules": {
+		"semi": 0,
+		"indent": 0,
+		"no-tabs": 0,
+		"import/prefer-default-export": 0,
+		"prettier/prettier": "error",
+		"import/extensions": [
+			"error",
+			"ignorePackages",
+			{
+				"js": "never",
+				"jsx": "never",
+				"ts": "never",
+				"tsx": "never"
+			}
+		],
+		"quotes": ["error", "single"],
+		"max-len": [
+			"error",
+			{
+				"code": 120,
+				"ignoreComments": true,
+				"ignoreUrls": true
+			}
+		],
+		"no-console": 2,
+		"no-undef": 0,
+		"no-unused-vars": 0,
+		"no-unused-expressions": [
+			"error",
+			{
+				"allowShortCircuit": true,
+				"allowTernary": true
+			}
+		]
+	}
 }
