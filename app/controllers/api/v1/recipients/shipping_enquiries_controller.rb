@@ -5,13 +5,16 @@ module Api
         before_action :validate_new_enquiry_params, only: :create
 
         def create
-          sh_en = shipping_requests_service.enquire(recipient, shipping_request_id, service_provider_id)
-          render json: serialized_item(sh_en), status: :created
+          render json: serialized_item(shipping_enquiry), status: :created
         rescue ActiveRecord::RecordNotFound
           render status: :not_found
         end
 
         private
+
+        def shipping_enquiry
+          shipping_requests_service.enquire(recipient, shipping_request_id, service_provider_id)
+        end
 
         def shipping_request_id
           new_enquiry_params[:shipping_request_id].to_i

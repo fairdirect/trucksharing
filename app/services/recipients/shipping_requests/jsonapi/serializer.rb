@@ -15,16 +15,16 @@ module Recipients
           "/api/v1/recipients/shipping_requests/#{shipping_request.id}"
         end
 
-        attribute :donation_date do |sh_req|
-          sh_req.donation_date.to_date
+        attribute :donation_date do |shipping_request|
+          shipping_request.donation_date.to_date
         end
 
-        attribute :delivery_deadline do |sh_req|
-          sh_req.delivery_deadline.to_date
+        attribute :delivery_deadline do |shipping_request|
+          shipping_request.delivery_deadline.to_date
         end
 
-        attribute   :weight do |sh_req|
-          "#{sh_req.weight} kg"
+        attribute   :weight do |shipping_request|
+          "#{shipping_request.weight} kg"
         end
       end
     end
