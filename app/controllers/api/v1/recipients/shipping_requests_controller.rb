@@ -3,7 +3,7 @@ require "recipients/shipping_requests/jsonapi/serializer"
 module Api
   module V1
     module Recipients
-      class ShippingRequestsController < Api::V1::RecipientsController
+      class ShippingRequestsController < Api::V1::Recipients::BaseController
         def index
           render json: serialized_collection, status: :ok
         end

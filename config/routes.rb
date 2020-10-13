@@ -11,11 +11,11 @@ Rails.application.routes.draw do
         get :profile
       end
 
-      resource :recipient, only: [] do
+      resource :recipient, only: [], controller: "recipients/base" do
         get :authorised
       end
 
-      resource :service_provider, only: [] do
+      resource :service_provider, only: [], controller: "service_providers/base" do
         get :authorised
       end
 

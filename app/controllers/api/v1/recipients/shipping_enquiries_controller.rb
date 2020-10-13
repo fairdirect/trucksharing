@@ -1,7 +1,7 @@
 module Api
   module V1
     module Recipients
-      class ShippingEnquiriesController < Api::V1::RecipientsController
+      class ShippingEnquiriesController < Api::V1::Recipients::BaseController
         before_action :validate_new_enquiry_params, only: :create
 
         def create
