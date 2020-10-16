@@ -31,7 +31,12 @@ module Recipients
 
       def import_from_orders(orders)
         orders.map do |order|
+          # GraphHopper:
+          # - get the delivery address coordinates
+          # - get the ship address coordinates
+          # - calculate the length in kilometers
           repository.create!(attributes_factory.build_from_order(order))
+          # get the products data and build necessary attributes for our database
         end
       end
 
