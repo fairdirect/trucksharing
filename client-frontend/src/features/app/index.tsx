@@ -1,6 +1,11 @@
 import React from 'react'
-import ShippingRequestsContainer from '../shipping-requests-container'
+import ShippingRequestsContainer from '../../features/shipping-requests-container'
+import { Layout } from '../../components/layout'
 
-const App = () => <ShippingRequestsContainer />
+const App = () => (
+	<Layout>
+		<ShippingRequestsContainer />
+	</Layout>
+)
 
 export default App
