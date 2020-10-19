@@ -20,6 +20,8 @@ services:
   web_api:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    environment:
+      - GRAPH_HOPPER_API_KEY=${GRAPH_HOPPER_API_KEY}
     volumes:
       - .:/ofb
     ports:

@@ -30,6 +30,7 @@ gem 'rack-cors'
 gem 'jwt_sessions', '~> 2.3'
 gem 'jsonapi-serializer'
 gem 'sidekiq'
+gem 'open_street_map'
 
 group :development, :test do
   gem 'rspec-rails', '~> 4.0.0'

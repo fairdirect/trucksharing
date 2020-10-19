@@ -5,10 +5,12 @@ module Recipients
 
       def initialize(order_scope: ::Marketplace::Order,
                      repository: ::Logistics::ShippingRequest,
-                     attributes_factory: ::Recipients::ShippingRequests::AttributesFactory.new)
+                     attributes_factory: ::Recipients::ShippingRequests::AttributesFactory.new,
+                     geocode_service: Recipients::ShippingRequests::OpenStreetMap::Service.new)
         @order_scope = order_scope
         @repository = repository
         @attributes_factory = attributes_factory
+        @geocode_service = geocode_service
       end
 
       def orders_for_import_count(recipient, from: DEFAULT_FROM_DAYS.days.ago, to: Time.zone.now)
@@ -27,7 +29,7 @@ module Recipients
 
       private
 
-      attr_reader :order_scope, :repository, :attributes_factory
+      attr_reader :order_scope, :repository, :attributes_factory, :geocode_service
 
       def import_from_orders(orders)
         orders.map do |order|
