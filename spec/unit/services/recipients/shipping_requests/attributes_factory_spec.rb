@@ -4,7 +4,7 @@ RSpec.describe Recipients::ShippingRequests::AttributesFactory do
   let(:factory) { described_class.new }
 
   describe "#build_from_order" do
-    subject { factory.build_from_order(order) }
+    subject { factory.build_from_order(order, delivery_coordinates, pickup_coordinates) }
 
     let(:recipient) { FactoryBot.create(:user) }
     let(:order) do
@@ -19,6 +19,8 @@ RSpec.describe Recipients::ShippingRequests::AttributesFactory do
                        billing_addr: billing_addr,
                        shop: shop)
     end
+    let(:delivery_coordinates) { double(:coordinates, latitude: "12.2323", longitude: "12.333") }
+    let(:pickup_coordinates) { double(:coordinates, latitude: "12.2323", longitude: "12.333") }
 
     it "returns valid Shipping Request attributes" do
       expect(::Logistics::ShippingRequest.new(subject)).to be_valid

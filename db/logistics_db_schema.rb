@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_083659) do
+ActiveRecord::Schema.define(version: 2020_10_19_123431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,11 @@ ActiveRecord::Schema.define(version: 2020_10_01_083659) do
     t.string "pickup_zip", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "delivery_lat", default: "-1", null: false
+    t.string "delivery_lng", default: "-1", null: false
+    t.string "pickup_lat", default: "-1", null: false
+    t.string "pickup_lng", default: "-1", null: false
+    t.integer "route_length_meters", default: -1, null: false
     t.index ["user_id"], name: "index_logistics_shipping_requests_on_user_id"
   end
 

@@ -3,7 +3,7 @@ module Recipients
     class AttributesFactory
       DEFAULT_FROM_DAYS_NUMBER = 14
 
-      def build_from_order(ord)
+      def build_from_order(ord, delivery_coordinates, pickup_coordinates)
         creation_date = Time.zone.now
         {
           user_id: ord.user_id,
@@ -11,7 +11,11 @@ module Recipients
           donation_date: ord.created,
           delivery_deadline: ord.created + DEFAULT_FROM_DAYS_NUMBER.days,
           created_at: creation_date,
-          updated_at: creation_date
+          updated_at: creation_date,
+          delivery_lat: delivery_coordinates.latitude,
+          delivery_lng: delivery_coordinates.longitude,
+          pickup_lat: pickup_coordinates.latitude,
+          pickup_lng: pickup_coordinates.longitude,
         }.merge(
           build_delivery_address(ord.delivery_addr)
         ).merge(

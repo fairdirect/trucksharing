@@ -2,6 +2,9 @@ module Recipients
   module ShippingRequests
     module OpenStreetMap
       class Response
+
+        attr_reader :raw_response
+
         def initialize(raw_response)
           @raw_response = raw_response
         end
@@ -11,12 +14,8 @@ module Recipients
         end
 
         def longitude
-          raw_response["lng"]
+          raw_response["lon"]
         end
-
-        private
-
-        attr_reader :raw_response
       end
     end
   end

@@ -14,12 +14,14 @@ module Recipients
 
         def find!(query_text)
           response_items = search(query_text)
-          raise GeocodeNotFound if response_items.any?
+          raise GeocodeNotFound if response_items.empty?
 
           response_items.first
         end
 
         private
+
+        attr_reader :api_client
 
         def raw_search(query_text)
           api_client.search(q: query_text, format: "json", addressdetails: "1")

@@ -9,5 +9,13 @@ module Marketplace
     belongs_to :delivery_addr,    class_name: "Marketplace::Address"
     belongs_to :billing_addr,     class_name: "Marketplace::Address"
     has_one    :shipping_request, class_name: "Logistics::ShippingRequest", foreign_key: :epelia_order_id
+
+    def delivery_address_text
+      delivery_addr.to_s
+    end
+
+    def pickup_address_text
+      shop.address_to_s
+    end
   end
 end

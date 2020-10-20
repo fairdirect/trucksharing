@@ -2,12 +2,18 @@ require "rails_helper"
 
 RSpec.describe Recipients::ShippingRequests::Importer do
   let(:importer) do
-    described_class.new(order_scope: order_scope, repository: shipping_request_repo)
+    described_class.new(
+      order_scope: order_scope,
+      repository: shipping_request_repo,
+      geocode_service: geocode_service
+    )
   end
 
   let(:order_scope) { ::Marketplace::Order }
   let(:shipping_request_repo) { ::Logistics::ShippingRequest }
   let(:recipient) { FactoryBot.create(:user) }
+  let(:geocode_service) { double(:geocode_service, find!: geocode_service_response) }
+  let(:geocode_service_response) { double(:response, latitude: "43.123", longitude: "13.333") }
 
   describe "#import" do
     subject { importer.import(recipient) }
@@ -29,7 +35,7 @@ RSpec.describe Recipients::ShippingRequests::Importer do
       let(:order_placement_date) { 17.days.ago }
 
       it "won't import them" do
-        expect(subject).to eq 0
+        expect(subject.count).to eq 0
       end
     end
 
@@ -41,7 +47,7 @@ RSpec.describe Recipients::ShippingRequests::Importer do
       end
 
       it "imports the available orders" do
-        expect(subject).to eq 0
+        expect(subject.count).to eq 0
       end
     end
 
@@ -49,7 +55,7 @@ RSpec.describe Recipients::ShippingRequests::Importer do
       let(:order_placement_date) { 3.days.ago }
 
       it "imports the available orders" do
-        expect(subject).to eq 1
+        expect(subject.count).to eq 1
       end
     end
   end

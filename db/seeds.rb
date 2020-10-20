@@ -1,7 +1,38 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require "securerandom"
+require "digest"
+
+country = Marketplace::Country.create!(id: "DE",
+                                       name: "Germany",
+                                       phone: "+49")
+
+user = Marketplace::User.create!(email: "user@example.com",
+                                 phpbb_id: 1,
+                                 password: Digest::SHA256.hexdigest("abc"),
+                                 salt: Digest::SHA256.hexdigest("abc"))
+
+shop = Marketplace::Shop.create!(user_id: user.id,
+                                 name: "Awesome Shop!",
+                                 url: "shop@example.com",
+                                 company: "Shopping Inc.",
+                                 street: "Florapromenade",
+                                 house: "22",
+                                 zip: "3123",
+                                 city: "Berlin",
+                                 country: "DE",
+                                 phone: "4324234243")
+
+addr = Marketplace::Address.create!(user_id: user.id,
+                                    street: "Gartenwinkel",
+                                    company: "Awesome foundation",
+                                    house: "36",
+                                    city: "Leipzig",
+                                    zip: "4289",
+                                    country: "DE")
+
+Marketplace::Order.create!(user_id: user.id,
+                           shop_id: shop.id,
+                           delivery_addr_id: addr.id,
+                           billing_addr_id: addr.id,
+                           status: "in_process",
+                           order_number: SecureRandom.hex)
+

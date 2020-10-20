@@ -19,12 +19,9 @@ module Recipients
 
       def import(recipient, from: DEFAULT_FROM_DAYS.days.ago, to: Time.zone.now)
         imported_orders = orders_to_import(recipient.id, last_import_date(recipient, from)..to)
-
-        return 0 if imported_orders.empty?
-
         import_from_orders(imported_orders)
 
-        imported_orders.count
+        imported_orders
       end
 
       private
@@ -33,13 +30,17 @@ module Recipients
 
       def import_from_orders(orders)
         orders.map do |order|
+          delivery_coordinates = geocode_service.find!(order.delivery_address_text)
+          pickup_coordinates = geocode_service.find!(order.pickup_address_text)
           # GraphHopper:
-          # - get the delivery address coordinates
-          # - get the ship address coordinates
           # - calculate the length in kilometers
-          repository.create!(attributes_factory.build_from_order(order))
+          repository.create!(build_order(order, delivery_coordinates, pickup_coordinates))
           # get the products data and build necessary attributes for our database
         end
+      end
+
+      def build_order(order, delivery_coordinates, pickup_coordinates)
+        attributes_factory.build_from_order(order, delivery_coordinates, pickup_coordinates)
       end
 
       def last_import_date(recipient, from)
