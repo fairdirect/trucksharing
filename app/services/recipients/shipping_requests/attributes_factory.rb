@@ -3,7 +3,7 @@ module Recipients
     class AttributesFactory
       DEFAULT_FROM_DAYS_NUMBER = 14
 
-      def build_from_order(ord, delivery_coordinates, pickup_coordinates)
+      def build_from_order(ord, delivery_coordinates, pickup_coordinates, path)
         creation_date = Time.zone.now
         {
           user_id: ord.user_id,
@@ -16,6 +16,7 @@ module Recipients
           delivery_lng: delivery_coordinates.longitude,
           pickup_lat: pickup_coordinates.latitude,
           pickup_lng: pickup_coordinates.longitude,
+          route_length_meters: path.distance
         }.merge(
           build_delivery_address(ord.delivery_addr)
         ).merge(

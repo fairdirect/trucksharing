@@ -19,6 +19,12 @@ module GraphHopper
       Net::HTTP.get_response(uri)
     end
 
+    def get_params_string(path, params_string)
+      uri = URI(host + path)
+      uri.query = "#{params_string}&key=#{api_key}"
+      Net::HTTP.get_response(uri)
+    end
+
     private
 
     attr_reader :host, :api_key

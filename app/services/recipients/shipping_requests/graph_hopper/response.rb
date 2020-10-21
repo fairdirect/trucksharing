@@ -1,6 +1,6 @@
 module Recipients
   module ShippingRequests
-    module OpenStreetMap
+    module GraphHopper
       class Response
 
         attr_reader :raw_response
@@ -9,16 +9,16 @@ module Recipients
           @raw_response = raw_response
         end
 
-        def latitude
-          raw_response["lat"]
+        def paths
+          @paths ||= raw_response["paths"].map { |raw_path| GraphHopper::Path.new(raw_path) }
         end
 
-        def longitude
-          raw_response["lon"]
+        def empty?
+          paths.empty?
         end
 
-        def to_params
-          "#{latitude},#{longitude}"
+        def top_path
+          paths.first
         end
       end
     end

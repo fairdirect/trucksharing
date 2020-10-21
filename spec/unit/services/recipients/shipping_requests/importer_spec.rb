@@ -5,7 +5,8 @@ RSpec.describe Recipients::ShippingRequests::Importer do
     described_class.new(
       order_scope: order_scope,
       repository: shipping_request_repo,
-      geocode_service: geocode_service
+      geocode_service: geocode_service,
+      route_service: route_service
     )
   end
 
@@ -13,7 +14,12 @@ RSpec.describe Recipients::ShippingRequests::Importer do
   let(:shipping_request_repo) { ::Logistics::ShippingRequest }
   let(:recipient) { FactoryBot.create(:user) }
   let(:geocode_service) { double(:geocode_service, find!: geocode_service_response) }
-  let(:geocode_service_response) { double(:response, latitude: "43.123", longitude: "13.333") }
+  let(:geocode_service_response) do
+    double(:response, latitude: "43.123", longitude: "13.333", to_params: "43.123,13.333")
+  end
+  let(:route_service) { double(:route_service, route: route_service_response) }
+  let(:route_service_response) { double(:paths, paths: [path], top_path: path) }
+  let(:path) { double(:path, distance: 1234.23423) }
 
   describe "#import" do
     subject { importer.import(recipient) }

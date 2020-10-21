@@ -1,17 +1,25 @@
 module Logistics
   module ShippingRequests
     class Address
-      def initialize(shipping_request_id:, city:, company:, country:, house:, street:, zip:)
-        @shipping_request_id = shipping_request_id
+      def initialize(city:, company:, country:, house:, street:, zip:, lat:, lng:)
         @company = company
         @country = country
         @city = city
         @house = house
         @street = street
         @zip = zip
+        @map_point = ShippingRequests::MapPoint.new(latitude: lat, longitude: lng)
       end
 
-      attr_reader :shipping_request_id, :city, :company, :country, :house, :street, :zip
+      def coordinates_array
+        map_point.to_a
+      end
+
+      def coordinates_params
+        map_point.to_params
+      end
+
+      attr_reader :city, :company, :country, :house, :street, :zip, :map_point
     end
   end
 end
