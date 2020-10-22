@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react'
+import React, { FunctionComponent } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
@@ -116,7 +116,7 @@ export const ShippingRequestsItem: FunctionComponent<IShippingRequestItem> = ({
 		detailsWrapper,
 	} = useStyles()
 	// TODO: Connect with redux store, dispatch proper action
-	const handleClick = () => console.log('open')
+	const handleClick = () => onClick({ id, attributes })
 	const requestEnum = {
 		status: attributes.status,
 		date: attributes.donation_date,

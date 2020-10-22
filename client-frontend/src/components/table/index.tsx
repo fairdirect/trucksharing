@@ -16,7 +16,6 @@ const useStyles = makeStyles(({ palette: { text } }) => ({
 		borderRadius: '16px',
 	},
 	tableHead: {
-		fontWeight: 700,
 		paddingTop: '12px',
 		paddingBottom: '12px',
 		color: text.secondary,
