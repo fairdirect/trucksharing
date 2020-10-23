@@ -31,13 +31,14 @@ module Recipients
       attr_reader :order_scope, :repository, :attributes_factory, :geocode_service, :route_service
 
       def import_from_orders(orders)
-        orders.map do |order|
-          delivery_coordinates = geocode_service.find!(order.delivery_address_text)
-          pickup_coordinates = geocode_service.find!(order.pickup_address_text)
-          paths = route_service.route(pickup_coordinates.to_params, delivery_coordinates.to_params)
-          repository.create!(build_order(order, delivery_coordinates, pickup_coordinates, paths.top_path))
-          # get the products data and build necessary attributes for our database
-        end
+        orders.map { |order| create_order(order) }
+      end
+
+      def create_order(order)
+         delivery_coordinates = geocode_service.find!(order.delivery_address_text)
+         pickup_coordinates = geocode_service.find!(order.pickup_address_text)
+         paths = route_service.route(pickup_coordinates.to_params, delivery_coordinates.to_params)
+         repository.create!(build_order(order, delivery_coordinates, pickup_coordinates, paths.top_path))
       end
 
       def build_order(order, delivery_coordinates, pickup_coordinates, path)
