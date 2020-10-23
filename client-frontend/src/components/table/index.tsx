@@ -24,10 +24,9 @@ const useStyles = makeStyles(({ palette: { text } }) => ({
 
 interface Props {
 	headers: string[]
-	componentBody: Function
 }
 
-export const Table: FunctionComponent<Props> = ({ headers, componentBody }) => {
+export const Table: FunctionComponent<Props> = ({ headers, children }) => {
 	const { tableBox, tableHead } = useStyles()
 
 	return (
@@ -46,7 +45,7 @@ export const Table: FunctionComponent<Props> = ({ headers, componentBody }) => {
 						</TableRow>
 					</TableHead>
 
-					<TableBody>{componentBody()}</TableBody>
+					<TableBody>{children}</TableBody>
 				</TableContent>
 			</TableContainer>
 		</Box>

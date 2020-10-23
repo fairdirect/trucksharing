@@ -19,11 +19,15 @@
 		"ecmaVersion": 2021,
 		"sourceType": "module"
 	},
-	"plugins": ["react", "@typescript-eslint"],
+	"plugins": ["react", "@typescript-eslint", "react-hooks"],
 	"rules": {
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
+		"no-tabs": 0,
+		"no-shadow": 0,
+		"@typescript-eslint/no-shadow": ["error"],
 		"semi": 0,
 		"indent": 0,
-		"no-tabs": 0,
 		"import/prefer-default-export": 0,
 		"prettier/prettier": "error",
 		"import/extensions": [

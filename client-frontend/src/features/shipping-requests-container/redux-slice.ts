@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import unionArrayById from '../../utils/union-by-id'
+import { unionById } from '../../utils/array'
 import { IShippingRequest } from './types'
 
 const initialState: IShippingRequest[] = []
@@ -9,7 +9,7 @@ export const shippingRequestSlice = createSlice({
 	initialState,
 	reducers: {
 		fetchShippingRequests(state, action: PayloadAction<IShippingRequest[]>) {
-			return unionArrayById(state, action.payload)
+			return unionById(state, action.payload)
 		},
 	},
 })

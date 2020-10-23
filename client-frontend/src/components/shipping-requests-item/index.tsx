@@ -1,173 +1,91 @@
 import React, { FunctionComponent } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { IShippingRequestItem, INestedStringObj } from './types'
+import { getActiveShippingSelector } from '../../store/selectors'
+
+import { useSelector } from 'react-redux'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 import { Grid, IconButton, Box, Collapse, TextField, TableRow, TableCell, Typography } from '@material-ui/core'
+import { capitalize } from '../../utils/string'
+import { StatusChip } from './status-chip'
 
-type Attribute = string | number
-
-interface IShippingRequestItem {
-	id: string
-	attributes: {
-		[key: string]: Attribute
-	}
-	isOpen: boolean
-	isLast: boolean
-	isEven: boolean
-	onClick: Function
-}
-
-const useStyles = makeStyles(({ palette: { primary, text, common } }) => ({
-	head: {
-		cursor: 'pointer',
-	},
-	columnHeadLast: {
-		textAlign: 'right',
-	},
-	even: {
-		backgroundColor: fade(primary.dark, 0.03),
-	},
-	lastRowContent: {
-		'& > td.MuiTableCell-root': {
-			borderBottom: 'none',
-		},
-	},
-	borderless: {
-		borderBottom: 'none',
-	},
-	wrapper: {
-		paddingTop: 0,
-		paddingBottom: 0,
-	},
-	columnHead: {
-		color: primary.main,
-		fontWeight: 700,
-		marginBottom: '20px',
-	},
-	detailsWrapper: {
-		display: 'flex',
-		flexDirection: 'column',
-		'&:nth-child(odd)': {
-			paddingRight: '8px',
-		},
-		'&:nth-child(even)': {
-			paddingLeft: '8px',
-		},
-	},
-	detail: {
-		marginBottom: '16px',
-		width: '100%',
-		'& .MuiInputBase-root': {
-			backgroundColor: fade(primary.dark, 0.06),
-		},
-		'& .MuiFormLabel-root': {
-			color: text.secondary,
-		},
-		'& .MuiFilledInput-underline:before': {
-			borderBottomColor: fade(common.black, 0.38),
-			borderBottomStyle: 'solid',
-		},
-		'& .MuiInputBase-input': {
-			color: text.primary,
-		},
-	},
-	active: {
-		// backgroundColor: fade(primary.dark, 0.06),
-	},
-}))
-
-const capitalize = (string: string) => string.slice(0, 1).toUpperCase() + string.substr(1)
-
-const Details: FunctionComponent<{ [key: string]: any }> = ({ collection }) => {
-	const { detail } = useStyles()
-	return (
-		<>
-			{Object.values(collection).map((value, index) => (
-				<TextField
-					key={index}
-					className={detail}
-					label={capitalize(Object.keys(collection)[index])}
-					variant="filled"
-					disabled={true}
-					value={value}
-				/>
-			))}
-		</>
-	)
-}
+const DetailsList: FunctionComponent<INestedStringObj> = ({ collection, className }) => (
+	<>
+		{Object.entries(collection).map(([key, value], index) => (
+			<TextField key={index} className={className} label={capitalize(key)} variant="filled" disabled value={value} />
+		))}
+	</>
+)
 
 export const ShippingRequestsItem: FunctionComponent<IShippingRequestItem> = ({
 	id,
 	attributes,
-	isOpen,
 	onClick,
 	isLast,
 	isEven,
+	classes,
 }) => {
-	const {
-		columnHeadLast,
-		head,
-		borderless,
-		wrapper,
-		lastRowContent,
-		even,
-		columnHead,
-		active,
-		detailsWrapper,
-	} = useStyles()
 	// TODO: Connect with redux store, dispatch proper action
-	const handleClick = () => onClick({ id, attributes })
-	const requestEnum = {
-		status: attributes.status,
+	const handleClick = () => onClick(id)
+	const activeShippingRequestId: string = useSelector(getActiveShippingSelector)
+	const isOpen = activeShippingRequestId === id
+	const request = {
+		status: <StatusChip label={attributes.status as string} classes={classes} />,
 		date: attributes.donation_date,
 		number: attributes.order_number,
 		type: '-',
 		volume: '-',
 		weight: attributes.weight,
 		unloadingDevice: '-',
-		deadline: '-',
-		toggle: <IconButton size="small">{isOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}</IconButton>,
+		deadline: attributes.delivery_deadline,
+		toggle: (
+			<IconButton className={classes.openIcon} size="small">
+				{isOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+			</IconButton>
+		),
 	}
-	const colSpan = Object.keys(requestEnum).length
+	const colSpan = Object.keys(request).length
 
 	const { pickup, delivery } = {
 		pickup: {
-			name: attributes.pickup_company_name,
+			name: `${attributes.pickup_company_name}`,
 			address: `${attributes.pickup_street} ${attributes.pickup_house}, ${attributes.pickup_zip} ${attributes.pickup_city}, ${attributes.pickup_country}`,
 		},
 		delivery: {
-			name: attributes.delivery_company_name,
+			name: `${attributes.delivery_company_name}`,
 			address: `${attributes.delivery_street} ${attributes.delivery_house}, ${attributes.delivery_zip} ${attributes.delivery_city}, ${attributes.delivery_country}`,
 		},
 	}
 
 	return (
 		<>
-			<TableRow onClick={handleClick} className={`${head} ${isEven && even} ${isOpen && active}`}>
+			<TableRow
+				onClick={handleClick}
+				className={`${classes.head} ${isEven && classes.even} ${isOpen && classes.active}`}
+			>
 				{/* FIXME: Add missing attributes, once included in API */}
-				{Object.values(requestEnum).map((prop, index) => (
-					<TableCell key={index} className={`${borderless} ${index === colSpan && columnHeadLast}`}>
+				{Object.values(request).map((prop, index) => (
+					<TableCell key={index} className={`${classes.borderless} ${index === colSpan && classes.columnHeadLast}`}>
 						{prop}
 					</TableCell>
 				))}
 			</TableRow>
 
-			<TableRow className={`${isLast && lastRowContent} ${isEven && even} ${isOpen && active}`}>
-				<TableCell colSpan={colSpan} className={wrapper}>
+			<TableRow className={`${isLast && classes.lastRowContent} ${isEven && classes.even} ${isOpen && classes.active}`}>
+				<TableCell colSpan={colSpan} className={classes.wrapper}>
 					<Collapse in={isOpen} timeout="auto" unmountOnExit>
 						<Box paddingBottom={2}>
 							<Grid container>
-								<Grid item xs={6} className={detailsWrapper}>
-									<Typography className={columnHead} variant="h2" component="p">
+								<Grid item xs={6} className={classes.detailsWrapper}>
+									<Typography className={classes.columnHead} variant="h2" component="p">
 										Consignor details
 									</Typography>
-									<Details collection={pickup} />
+									<DetailsList collection={pickup} className={classes.detail} />
 								</Grid>
-								<Grid item xs={6} className={detailsWrapper}>
-									<Typography className={columnHead} variant="h2" component="p">
+								<Grid item xs={6} className={classes.detailsWrapper}>
+									<Typography className={classes.columnHead} variant="h2" component="p">
 										Recipient details
 									</Typography>
-									<Details collection={delivery} />
+									<DetailsList collection={delivery} className={classes.detail} />
 								</Grid>
 							</Grid>
 						</Box>
