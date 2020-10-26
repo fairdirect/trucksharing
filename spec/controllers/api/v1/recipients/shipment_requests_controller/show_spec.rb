@@ -5,8 +5,9 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
     subject { get("/api/v1/recipients/shipping_requests/#{requested_shipping_request_id}", headers: headers) }
     let(:headers) { { "Authorisation" => token } }
     let(:token) { "2e48afa0-ad6b-424b-b216-6ed41213d98a" }
+    let!(:recipient) { Marketplace::User.create_mocked_recipient }
     let!(:shipping_request) do
-      FactoryBot.create(:shipping_request, user_id: 1)
+      FactoryBot.create(:shipping_request, user_id: recipient.id)
     end
 
     let(:shipping_request_id) { 1 }

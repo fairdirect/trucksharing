@@ -18,13 +18,9 @@ module Api
         end
 
         def authenticate_user!
-          @user = authentication_strategy.authenticate(http_auth_header)
-        rescue NoAuthenticationHeaderError, Users::Authentication::UnknownTokenError
+          @user = ::Marketplace::User.find_by_token!(http_auth_header)
+        rescue ActiveRecord::RecordNotFound
           render status: :unauthorized
-        end
-
-        def authentication_strategy
-          @authentication_strategy ||= Users::Authentication::MockedStrategy.new
         end
     end
   end

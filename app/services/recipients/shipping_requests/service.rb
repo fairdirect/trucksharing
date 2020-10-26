@@ -2,7 +2,7 @@ module Recipients
   module ShippingRequests
     class Service
       def initialize(
-        user_repository: ::Users::Authentication::MockedUserRepository.new,
+        user_repository: ::Marketplace::User,
         shipping_request_repository: ::Logistics::ShippingRequest
       )
         @user_repository = user_repository
@@ -21,7 +21,7 @@ module Recipients
       attr_reader :user_repository, :shipping_request_repository
 
       def service_provider(service_provider_id)
-        user_repository.find_service_provider(id: service_provider_id)
+        user_repository.find(service_provider_id)
       end
 
       def shipping_request(recipient, shipping_request_id)

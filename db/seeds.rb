@@ -5,10 +5,7 @@ country = Marketplace::Country.create!(id: "DE",
                                        name: "Germany",
                                        phone: "+49")
 
-user = Marketplace::User.create!(email: "user@example.com",
-                                 phpbb_id: 1,
-                                 password: Digest::SHA256.hexdigest("abc"),
-                                 salt: Digest::SHA256.hexdigest("abc"))
+user = Marketplace::User..create_mocked_recipient
 
 shop = Marketplace::Shop.create!(user_id: user.id,
                                  name: "Awesome Shop!",
@@ -35,4 +32,6 @@ Marketplace::Order.create!(user_id: user.id,
                            billing_addr_id: addr.id,
                            status: "in_process",
                            order_number: SecureRandom.hex)
+
+recipient = Marketplace::User.create_mocked_service_provider
 

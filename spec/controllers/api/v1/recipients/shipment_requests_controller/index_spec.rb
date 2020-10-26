@@ -5,9 +5,10 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
     subject { get('/api/v1/recipients/shipping_requests', headers: headers) }
     let(:headers) { { "Authorisation" => token } }
     let(:token) { "2e48afa0-ad6b-424b-b216-6ed41213d98a" }
+    let!(:recipient) { Marketplace::User.create_mocked_recipient }
     let!(:expected_data) do
       3.times.map do
-        shipping_request = FactoryBot.create(:shipping_request, user_id: 1)
+        shipping_request = FactoryBot.create(:shipping_request, user_id: recipient.id)
         {
           "attributes" => {
             "delivery_city"=>         shipping_request.delivery_city,
