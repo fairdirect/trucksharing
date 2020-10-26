@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_PASSWORD: marketplace_db_pass
   logistics_db:
-    image: postgres:13
+    image: postgres:12
     ports:
       - "5432:5432"
     volumes:

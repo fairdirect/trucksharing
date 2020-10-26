@@ -5,7 +5,7 @@ country = Marketplace::Country.create!(id: "DE",
                                        name: "Germany",
                                        phone: "+49")
 
-user = Marketplace::User..create_mocked_recipient
+user = Marketplace::User.create_mocked_recipient
 
 shop = Marketplace::Shop.create!(user_id: user.id,
                                  name: "Awesome Shop!",
