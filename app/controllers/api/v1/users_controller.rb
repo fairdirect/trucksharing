@@ -12,10 +12,6 @@ module Api
 
       private
 
-        def request_headers
-          request.headers
-        end
-
         def http_auth_header
           raise NoAuthenticationHeaderError if request_headers["Authorisation"].nil?
           request_headers["Authorisation"].split(' ').last

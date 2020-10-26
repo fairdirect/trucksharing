@@ -19,6 +19,12 @@ Rails.application.routes.draw do
         get :authorised
       end
 
+      resource :system, only: [], controller: "systems/base" do
+        get :ping
+      end
+
+      get "import_order/:order_number", to: "systems/shipping_requests#import"
+
       RecipientsRouter.new(self).draw
     end
   end

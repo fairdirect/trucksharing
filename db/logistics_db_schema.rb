@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_123431) do
+ActiveRecord::Schema.define(version: 2020_10_23_082626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "logistics_api_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deprecated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "logistics_shipping_enquiries", force: :cascade do |t|
     t.bigint "service_provider_id"

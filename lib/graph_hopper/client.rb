@@ -49,7 +49,9 @@ module GraphHopper
 
       def initialize(response)
         @response = response
-        @body = JSON.parse(response.body)
+        unless response.body.nil?
+          @body = JSON.parse(response.body)
+        end
         @code = response.code
       end
 

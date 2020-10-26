@@ -20,22 +20,31 @@ RSpec.describe Recipients::ShippingRequests::Importer do
   let(:route_service) { double(:route_service, route: route_service_response) }
   let(:route_service_response) { double(:paths, paths: [path], top_path: path) }
   let(:path) { double(:path, distance: 1234.23423) }
+  let!(:order_for_import) do
+    country = FactoryBot.create(:country)
+    delivery_addr = FactoryBot.create(:address, user: recipient, country: country.id)
+    billing_addr = FactoryBot.create(:address, user: recipient, country: country.id)
+    shop = FactoryBot.create(:shop, user: recipient, country: country.id)
+    FactoryBot.create(:order,
+                     user: recipient,
+                     created: order_placement_date,
+                     delivery_addr: delivery_addr,
+                     billing_addr: billing_addr,
+                     shop: shop)
+  end
+
+  describe "#import_for_order_number" do
+    subject { importer.import_for_order_number(order_for_import) }
+
+    let(:order_placement_date) { 3.days.ago }
+
+    it "imports the available orders" do
+      expect(subject.order_number).to eq order_for_import.order_number
+    end
+  end
 
   describe "#import" do
     subject { importer.import(recipient) }
-
-    let!(:order_for_import) do
-      country = FactoryBot.create(:country)
-      delivery_addr = FactoryBot.create(:address, user: recipient, country: country.id)
-      billing_addr = FactoryBot.create(:address, user: recipient, country: country.id)
-      shop = FactoryBot.create(:shop, user: recipient, country: country.id)
-      FactoryBot.create(:order,
-                       user: recipient,
-                       created: order_placement_date,
-                       delivery_addr: delivery_addr,
-                       billing_addr: billing_addr,
-                       shop: shop)
-    end
 
     context "when there are orders to import but are overdo" do
       let(:order_placement_date) { 17.days.ago }
