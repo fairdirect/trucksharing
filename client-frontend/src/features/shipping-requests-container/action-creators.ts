@@ -5,8 +5,8 @@ import { getAllShippingRequests } from '../../api/recipient'
 export const fetchShippingRequests = (): AppThunk => async (dispatch: AppDispatch) => {
 	// TODO: Think about caching the responses
 	getAllShippingRequests()
-		.then((response) => {
-			response.data && dispatch(shippingRequestSlice.actions.fetchShippingRequests(response.data))
+		.then((data) => {
+			dispatch(shippingRequestSlice.actions.fetchShippingRequests(data))
 			// TODO: Add user facing success notification
 		})
 		.catch((error) => {
