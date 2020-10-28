@@ -21,6 +21,7 @@
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.3",
     "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@types/lodash.uniqby": "^4.7.6",
     "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.6",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
     "@types/styled-components": "^5.1.4",
