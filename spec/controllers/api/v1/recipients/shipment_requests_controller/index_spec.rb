@@ -9,6 +9,7 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
     let!(:expected_data) do
       3.times.map do
         shipping_request = FactoryBot.create(:shipping_request, user_id: recipient.id)
+        price = shipping_request.shipment_price
         {
           "attributes" => {
             "delivery_city"=>         shipping_request.delivery_city,
@@ -27,7 +28,9 @@ RSpec.describe "Index of Recipient's Shipping Requests", type: :request do
             "delivery_deadline"=>     shipping_request.delivery_deadline.to_date.to_s(:db),
             "order_number"=>          shipping_request.order_number,
             "status"=>                shipping_request.status,
-            "weight"=>                "#{shipping_request.weight} kg"
+            "pallet_count"=>          shipping_request.pallet_count,
+            "weight"=>                "#{shipping_request.cargo_weight} kg",
+            "price" =>                "#{sprintf("%.2f",(price.amount_dollars))} #{price.currency}"
           },
           "id"=>shipping_request.id.to_s,
           "type"=>"shipping_request",

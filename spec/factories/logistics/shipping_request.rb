@@ -23,5 +23,7 @@ FactoryBot.define do
     pickup_name { "Name" }
     pickup_street { "Bruhl" }
     pickup_zip { "04109" }
+    route_length_meters { 123_000 }
+    cargo_weight { 5420 }
   end
 end

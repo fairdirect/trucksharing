@@ -12,6 +12,7 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
 
     let(:shipping_request_id) { 1 }
     let(:expected_response) do
+      price = shipping_request.shipment_price
       {
         "data" => {
           "attributes" => {
@@ -31,7 +32,9 @@ RSpec.describe "Details of a Recipient's Shipping Request", type: :request do
             "delivery_deadline"=>     shipping_request.delivery_deadline.to_date.to_s(:db),
             "order_number"=>          shipping_request.order_number,
             "status"=>                shipping_request.status,
-            "weight"=>                "#{shipping_request.weight} kg"
+            "pallet_count"=>          shipping_request.pallet_count,
+            "weight"=>                "#{shipping_request.cargo_weight} kg",
+            "price" =>                "#{sprintf("%.2f",(price.amount_dollars))} #{price.currency}"
           },
           "id"=>shipping_request.id.to_s,
           "type"=>"shipping_request",

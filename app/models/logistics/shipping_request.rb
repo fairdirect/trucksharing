@@ -27,8 +27,12 @@ module Logistics
       "pending"
     end
 
-    def weight
-      6000
+    def required_fuel
+      ::Logistics::ShippingRequests::RequiredFuel.new(route_length_meters, cargo_weight)
+    end
+
+    def shipment_price
+      ::Logistics::ShippingRequests::ShipmentPrice.new(required_fuel.liters)
     end
 
     private
