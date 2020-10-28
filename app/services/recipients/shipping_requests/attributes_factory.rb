@@ -16,7 +16,9 @@ module Recipients
           delivery_lng: delivery_coordinates.longitude,
           pickup_lat: pickup_coordinates.latitude,
           pickup_lng: pickup_coordinates.longitude,
-          route_length_meters: path.distance
+          route_length_meters: path.distance,
+          cargo_weight: ord.weight,
+          pallet_count: ord.pallet_count
         }.merge(
           build_delivery_address(ord.delivery_addr)
         ).merge(
