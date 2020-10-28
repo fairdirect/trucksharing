@@ -2,6 +2,7 @@ require "securerandom"
 
 FactoryBot.define do
   factory :address, class: "Marketplace::Address" do
+    user
     company { Faker::Company.name }
     street { Faker::Address.street_name }
     house { Faker::Address.building_number }

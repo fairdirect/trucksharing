@@ -2,7 +2,7 @@ require "securerandom"
 
 FactoryBot.define do
   factory :shop, class: "Marketplace::Shop" do
-    user factory: :user
+    user
     name { Faker::Company.name }
     url { Faker::Internet.unique.url }
     company { Faker::Company.name }

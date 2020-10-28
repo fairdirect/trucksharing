@@ -20,18 +20,7 @@ RSpec.describe "Api Key Authentication", type: :request do
       let(:recipient) { FactoryBot.create(:user) }
       let!(:imported_shipping_request) { FactoryBot.create(:shipping_request, user_id: recipient.id, order_number: order_number) }
       let(:order_number) { order.order_number }
-      let!(:order) do
-        country = FactoryBot.create(:country)
-        delivery_addr = FactoryBot.create(:address, user: recipient, country: country.id)
-        billing_addr = FactoryBot.create(:address, user: recipient, country: country.id)
-        shop = FactoryBot.create(:shop, user: recipient, country: country.id)
-        FactoryBot.create(:order,
-                         user: recipient,
-                         created: 2.days.since,
-                         delivery_addr: delivery_addr,
-                         billing_addr: billing_addr,
-                         shop: shop)
-      end
+      let!(:order) { FactoryBot.create(:order, user: recipient, created: 2.days.since) }
 
       it "returns the imported shipping request for confirmation" do
         expect(subject).to eq 200
