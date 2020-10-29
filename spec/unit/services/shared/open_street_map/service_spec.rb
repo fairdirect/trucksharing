@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Recipients::ShippingRequests::OpenStreetMap::Service do
+RSpec.describe Shared::OpenStreetMap::Service do
   let(:service) { described_class.new(api_client: api_client) }
   let(:api_client) { double(:api_client, search: search_result) }
   let(:search_result) { [hit] }

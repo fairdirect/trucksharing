@@ -4,6 +4,14 @@ module Logistics
 
     belongs_to :user, class_name: "Marketplace::User"
 
+    def departure_address_text
+      departure_address.to_s
+    end
+
+    def destination_address_text
+      destination_address.address_to_s
+    end
+
     def departure_address
       build_address(departure_city, departure_country, departure_house,
                     departure_street, departure_zip, departure_lat, departure_lng)

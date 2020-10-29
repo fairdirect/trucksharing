@@ -6,7 +6,7 @@ module Recipients
       def initialize(order_scope: ::Marketplace::Order,
                      repository: ::Logistics::ShippingRequest,
                      attributes_factory: ShippingRequests::AttributesFactory.new,
-                     geocode_service: ShippingRequests::OpenStreetMap::Service.new,
+                     geocode_service: ::Shared::OpenStreetMap::Service.new,
                      route_service: ShippingRequests::GraphHopper::Service.new)
         @order_scope = order_scope
         @repository = repository
