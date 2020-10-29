@@ -1,8 +1,7 @@
 module Logistics
   module ShippingRequests
     class Address
-      def initialize(city:, company:, country:, house:, street:, zip:, lat:, lng:)
-        @company = company
+      def initialize(city:, country:, house:, street:, zip:, lat:, lng:)
         @country = country
         @city = city
         @house = house
@@ -19,7 +18,7 @@ module Logistics
         map_point.to_params
       end
 
-      attr_reader :city, :company, :country, :house, :street, :zip, :map_point
+      attr_reader :city, :country, :house, :street, :zip, :map_point
     end
   end
 end

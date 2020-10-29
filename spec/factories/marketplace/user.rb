@@ -7,5 +7,9 @@ FactoryBot.define do
     password { SecureRandom.hex }
     salt { SecureRandom.hex }
     type { "customer" }
+
+    factory :service_provider do
+      type { Marketplace::User::SERVICE_PROVIDER_ROLE_NAME }
+    end
   end
 end

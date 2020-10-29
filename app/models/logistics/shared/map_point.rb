@@ -1,5 +1,5 @@
 module Logistics
-  module ShippingRequests
+  module Shared
     class MapPoint
       def initialize(latitude:, longitude:)
         @latitude = latitude
