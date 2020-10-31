@@ -1,3 +1,4 @@
+# TODO: If you will use it in a different user's domain, move it to module Shared
 module Recipients
   module ShippingRequests
     module GraphHopper

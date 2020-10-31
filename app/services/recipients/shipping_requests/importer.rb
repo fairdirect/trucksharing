@@ -7,6 +7,7 @@ module Recipients
                      repository: ::Logistics::ShippingRequest,
                      attributes_factory: ShippingRequests::AttributesFactory.new,
                      geocode_service: ::Shared::OpenStreetMap::Service.new,
+                     # HINT: Here is the route service:
                      route_service: ShippingRequests::GraphHopper::Service.new)
         @order_scope = order_scope
         @repository = repository
