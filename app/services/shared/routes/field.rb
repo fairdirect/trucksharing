@@ -12,7 +12,7 @@ module Shared
     #
     # We are accomplishing that by having the boundaries for available coordinates
     # in the database and that of course reduces the available points to those
-    # contained in the field.
+    # contained in this field.
     class Field
       def initialize(points)
         @points = points
