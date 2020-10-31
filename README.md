@@ -16,6 +16,12 @@
 
 ## Domain
 
+ Look ath everything from a user type's perspective.
+
+ A Recipient will not create Routes. A Service Provider will not import Shipping Requests. Those functionalities lie in the specific user type/role domain (module Recipients, module ServiceProviders, module Systems).
+
+ All shared modules and classes lie in the Shared module.
+
 ### Why it was made?
 
  This application connects Recipients of food donations with heavy transport Service Providers.
