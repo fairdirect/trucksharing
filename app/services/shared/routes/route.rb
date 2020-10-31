@@ -2,6 +2,9 @@ require_relative "point"
 
 module Shared
   module Routes
+    # Shared::Routes::Route class is describing a route abstract data structure.
+    #
+    # It allows us to calculate the general direction of the route expressed in radians.
     class Route
       def initialize(departure_point, destination_point)
         @start_point = build_point(departure_point.latitude, departure_point.longitude)

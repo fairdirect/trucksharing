@@ -7,6 +7,11 @@ module Shared
         @latitude = latitude
         @longitude = longitude
       end
+
+      def ==(point)
+        latitude == point.latitude &&
+          longitude == point.longitude
+      end
     end
   end
 end
