@@ -32,6 +32,7 @@ const ShippingRequestsContainer: React.FunctionComponent = () => {
 
 	useEffect(() => {
 		getAllRequests()
+		// eslint-disable-next-line => for some reason my eslint settigns are ignored
 	}, [])
 
 	const shippingRequestsList = shippingRequests.map(({ id, attributes }: IShippingRequest, index) => (

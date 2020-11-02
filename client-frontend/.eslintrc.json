@@ -9,7 +9,8 @@
 		"airbnb",
 		"plugin:import/errors",
 		"plugin:import/warnings",
-		"plugin:import/typescript"
+		"plugin:import/typescript",
+		"plugin:react-hooks/recommended"
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
@@ -19,7 +20,7 @@
 		"ecmaVersion": 2021,
 		"sourceType": "module"
 	},
-	"plugins": ["react", "@typescript-eslint", "react-hooks"],
+	"plugins": ["react", "@typescript-eslint"],
 	"rules": {
 		"react-hooks/rules-of-hooks": "warn",
 		"react-hooks/exhaustive-deps": 0,

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Layout } from '../../components/layout'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Layout } from '../../components'
+import { Route } from 'react-router-dom'
 import {
 	VisitorDefault,
 	RecipientEnquiries,

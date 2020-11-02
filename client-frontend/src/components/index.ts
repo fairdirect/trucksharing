@@ -1,3 +1,5 @@
 export * from './layout'
 export * from './shipping-requests-item'
 export * from './table'
+export * from './primary-bar'
+export * from './btn-pin'
