@@ -1,13 +1,20 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { withRouter } from 'react-router'
-import { getActiveRequestDetailsSelector } from '../../store/recipient-selectors'
+import { USER_ROLE } from '../../constants'
 import { getUserInfo } from '../../store/selectors'
+import { ActionsRecipient } from './actions-recipient'
 
 const UserActionsContainer = () => {
-  const requestDetails = useSelector(getActiveRequestDetailsSelector)
+  const { role } = useSelector(getUserInfo)
+  const isRecipient = USER_ROLE.RECIPIENT === role
+  const isAgent = USER_ROLE.AGENT === role
 
-  return <div>Actions</div>
+  return (
+    <>
+      {isRecipient && <ActionsRecipient />}
+      {isAgent && <p>Agent actions</p>}
+    </>
+  )
 }
 
 export default UserActionsContainer

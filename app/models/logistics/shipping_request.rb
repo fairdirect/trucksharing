@@ -24,7 +24,7 @@ module Logistics
     end
 
     def status
-      "pending"
+      ["not requested", "pending enquiry", "enquiry settled", "pending delivery", "confirm success", "delivery successful"].sample
     end
 
     def weight

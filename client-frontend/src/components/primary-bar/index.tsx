@@ -1,11 +1,9 @@
 import React, { FC } from 'react'
-import { useSelector } from 'react-redux'
-import { getActiveShippingSelector } from '../../store/recipient-selectors'
 import { fade, createStyles, Theme, makeStyles } from '@material-ui/core'
 import { AppBar, Toolbar, IconButton, Typography, Box, InputBase } from '@material-ui/core'
-import { AccountCircle as IconAccount, Search as IconSearch, FilterList as IconFilters, Add as IconAdd } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import { AccountCircle as IconAccount, Search as IconSearch, FilterList as IconFilters } from '@material-ui/icons'
 import { BtnPin } from '../btn-pin'
+import UserActionsContainer from '../../features/user-actions-container'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,8 +57,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const PrimaryBar: FC = () => {
   const classes = useStyles()
-  const activeShippingRequestId: string = useSelector(getActiveShippingSelector)
-  const isRequestSelected = Boolean(activeShippingRequestId)
 
   return (
     <AppBar>
@@ -93,10 +89,7 @@ export const PrimaryBar: FC = () => {
         </Box>
 
         <Box ml="auto">
-          <Link to="/recipient/shipping-requests">requests</Link>
-          <BtnPin disabled={!isRequestSelected} to={`/recipient/shipping-requests/${activeShippingRequestId}/enquiries`}>
-            <IconAdd />
-          </BtnPin>
+          <UserActionsContainer />
         </Box>
       </Toolbar>
     </AppBar>

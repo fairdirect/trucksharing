@@ -1,35 +1,57 @@
 import React, { FC } from 'react'
-import { createStyles, makeStyles, Theme, darken } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { IconButton } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { IBtnPin } from './types'
 
 const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		default: {
-			color: '#fff',
-			backgroundColor: theme.palette.secondary.main,
-			transition: 'background 0.3s ease',
-			padding: theme.spacing(1),
-			'&:hover': {
-				backgroundColor: darken(theme.palette.secondary.main, 0.15),
-			},
-			'&.Mui-disabled': {
-				backgroundColor: theme.palette.secondary.main,
-				color: 'inherit',
-				opacity: 0.6,
-			},
-		},
-	}),
+  createStyles({
+    shared: {
+      transition: 'background 0.3s ease',
+      padding: theme.spacing(1),
+      '&.Mui-disabled': {
+        color: 'inherit',
+        opacity: 0.6,
+      },
+    },
+    secondary: {
+      color: theme.palette.secondary.contrastText,
+      backgroundColor: theme.palette.secondary.main,
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.dark,
+      },
+      '&.Mui-disabled': {
+        backgroundColor: theme.palette.secondary.main,
+      },
+    },
+    success: {
+      color: theme.palette.secondary.contrastText,
+      backgroundColor: theme.palette.success.main,
+      '&:hover': {
+        backgroundColor: theme.palette.success.dark,
+      },
+      '&.Mui-disabled': {
+        backgroundColor: theme.palette.success.main,
+      },
+    },
+    error: {
+      color: theme.palette.secondary.contrastText,
+      backgroundColor: theme.palette.error.main,
+      '&:hover': {
+        backgroundColor: theme.palette.error.dark,
+      },
+      '&.Mui-disabled': {
+        backgroundColor: theme.palette.error.main,
+      },
+    },
+  }),
 )
 
-export const BtnPin: FC<IBtnPin> = ({ children, disabled, to, theme = 'default' }) => {
-	const classes: { [key: string]: string } = useStyles()
-	const component = to ? Link : 'button'
+export const BtnPin: FC<IBtnPin> = ({ children, disabled, theme = 'secondary', onClick }) => {
+  const classes: { [key: string]: string } = useStyles()
 
-	return (
-		<IconButton disabled={disabled} component={component} to={to} className={classes[theme]}>
-			{children}
-		</IconButton>
-	)
+  return (
+    <IconButton disabled={disabled} component="button" className={`${classes.shared} ${classes[theme]}`} onClick={onClick}>
+      {children}
+    </IconButton>
+  )
 }
