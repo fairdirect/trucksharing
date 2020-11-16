@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { fade, lighten } from '@material-ui/core/styles/colorManipulator'
 
-export const useTableStyles = makeStyles(({ palette: { primary, text, common } }) => ({
+export const useTableStyles = makeStyles(({ palette: { grey, primary, text, common, success, error } }) => ({
   head: {
     cursor: 'pointer',
   },
@@ -65,27 +65,27 @@ export const useTableStyles = makeStyles(({ palette: { primary, text, common } }
     borderRadius: '12px',
   },
   'chip--idle': {
-    backgroundColor: 'rgba(158, 158, 158, 0.15)',
-    color: '#9E9E9E',
+    backgroundColor: lighten(grey[500], 0.9),
+    color: grey[500],
   },
   'chip--enquiry-pending': {
-    backgroundColor: 'rgba(98, 0, 234, 0.15)',
-    color: '#6200EA',
+    backgroundColor: lighten(grey[700], 0.9),
+    color: grey[700],
   },
   'chip--enquiry-settled': {
-    backgroundColor: 'rgba(106, 137, 204, 0.1)',
-    color: '#6A89CC',
+    backgroundColor: lighten(grey[900], 0.9),
+    color: grey[900],
   },
   'chip--delivery-pending': {
-    backgroundColor: 'rgba(230, 126, 34, 0.15)',
-    color: '#E67E22',
+    backgroundColor: lighten(primary.main, 0.9),
+    color: primary.main,
   },
   'chip--delivery-confirmed': {
-    backgroundColor: 'rgba(39, 174, 96, 0.15)',
-    color: '#20BF6B',
+    backgroundColor: lighten(error.main, 0.9),
+    color: error.main,
   },
   'chip--delivery-complete': {
-    backgroundColor: 'green',
-    color: '#20BF6B',
+    backgroundColor: lighten(success.main, 0.9),
+    color: success.main,
   },
 }))
