@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Layout } from '../../components'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { ROUTES } from '../../constants'
-import {
-  VisitorDefault,
-  RecipientEnquiries,
-  RecipientShippingRequests,
-  AgentFreightBills,
-  AgentRoutes,
-  AgentTransportOrders,
-} from '../../routes'
+
+const VisitorDefault = React.lazy(() => import('../../routes/visitor/visitor-default'))
+const RecipientEnquiries = React.lazy(() => import('../../routes/recipient/recipient-enquiries'))
+const RecipientShippingRequests = React.lazy(() => import('../../routes/recipient/recipient-shipping-requests'))
+const AgentFreightBills = React.lazy(() => import('../../routes/agent/agent-freight-bills'))
+const AgentRoutes = React.lazy(() => import('../../routes/agent/agent-routes'))
+const AgentTransportOrders = React.lazy(() => import('../../routes/agent/agent-transport-orders'))
 
 const App = () => (
   <Layout>
-    <Route exact path="/" component={VisitorDefault} />
-    <Route exact path={ROUTES.RECIPIENT.ENQUIRY_PLANNER} component={RecipientEnquiries} />
-    <Route exact path={ROUTES.RECIPIENT.SHIPPING_REQUESTS} component={RecipientShippingRequests} />
-    <Route exact path={ROUTES.AGENT.TRANSPORT_ORDERS} component={AgentTransportOrders} />
-    <Route exact path={ROUTES.AGENT.FREIGHT_BILLS} component={AgentFreightBills} />
-    <Route exact path={ROUTES.AGENT.ROUTES} component={AgentRoutes} />
+    <Suspense fallback={<div>loading...</div>}>
+      <Switch>
+        <Route exact path="/" component={VisitorDefault} />
+        <Route path={ROUTES.RECIPIENT.ENQUIRY_PLANNER} component={RecipientEnquiries} />
+        <Route path={ROUTES.RECIPIENT.SHIPPING_REQUESTS} component={RecipientShippingRequests} />
+        <Route path={ROUTES.AGENT.TRANSPORT_ORDERS} component={AgentTransportOrders} />
+        <Route path={ROUTES.AGENT.FREIGHT_BILLS} component={AgentFreightBills} />
+        <Route path={ROUTES.AGENT.ROUTES} component={AgentRoutes} />
+      </Switch>
+    </Suspense>
   </Layout>
 )
 

@@ -1,3 +1,5 @@
 import React from 'react'
 
-export const AgentTransportOrders = () => <div>Let's find a transport</div>
+const AgentTransportOrders = () => <div>Let's find a transport</div>
+
+export default AgentTransportOrders

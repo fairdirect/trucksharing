@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const tableHeaders = ['Order number (ID)', 'From', 'To', 'Cargo type', 'Cargo volume', 'Weight', 'Unloading device', 'Delivery deadline']
 // const tableRouteHeaders = ['Date', 'From', 'To', 'Stops', 'Space', 'Weight', 'Unloading device', 'Company', 'Price', 'Status']
 
-export const RecipientEnquiries = () => {
+const RecipientEnquiries = () => {
   const classes = useStyles()
   const requestDetails = useSelector(getActiveRequestDetailsSelector)
   const attributes = requestDetails?.attributes
@@ -81,3 +81,5 @@ export const RecipientEnquiries = () => {
     </>
   )
 }
+
+export default RecipientEnquiries
