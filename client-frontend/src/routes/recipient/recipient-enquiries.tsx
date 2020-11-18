@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const tableHeaders = ['Order number (ID)', 'From', 'To', 'Cargo type', 'Cargo volume', 'Weight', 'Unloading device', 'Delivery deadline']
+// const tableRouteHeaders = ['Date', 'From', 'To', 'Stops', 'Space', 'Weight', 'Unloading device', 'Company', 'Price', 'Status']
 
 export const RecipientEnquiries = () => {
   const classes = useStyles()
@@ -74,7 +75,7 @@ export const RecipientEnquiries = () => {
 
       <Box my={4}>
         <Typography className={classes.header} variant="h1">
-          Browser available routes
+          Browse available routes
         </Typography>
       </Box>
     </>

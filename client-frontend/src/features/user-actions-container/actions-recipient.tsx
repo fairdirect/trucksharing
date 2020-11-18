@@ -1,14 +1,14 @@
 import React, { useState, useContext, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Add as IconAdd, Done as IconDone, Clear as IconCancel, Phone as IconContact } from '@material-ui/icons'
+import { Add as IconAdd, Done as IconDone, Clear as IconCancel, Phone as IconContact, LocalShipping as IconTruck } from '@material-ui/icons'
 import { BtnPin } from '../../components'
 import { getActiveRequestDetailsSelector } from '../../store/recipient-selectors'
 import { ROUTES, SHIPPING_REQUEST_STATUS } from '../../constants'
 
 const ActionsContainerContext = createContext({} as any)
 
-const CreateEnquiry = () => {
+const TriggerEnquiryPlanner = () => {
   const history = useHistory()
   const {
     shippingRequest: { id },
@@ -22,7 +22,7 @@ const CreateEnquiry = () => {
 
   return (
     <BtnPin disabled={!Boolean(enquiryUrl)} onClick={handleClick}>
-      <IconAdd />
+      <IconTruck />
     </BtnPin>
   )
 }
@@ -63,37 +63,66 @@ const ContactDetails = () => {
   )
 }
 
+const CreateEnquiry = () => {
+  const handleClick = () => {
+    console.log('Show contact details')
+  }
+
+  return (
+    <BtnPin onClick={handleClick}>
+      <IconAdd />
+    </BtnPin>
+  )
+}
+
+const ShippingRequestActions = () => {
+  const { IDLE, ENQUIRY_PENDING, ENQUIRY_SETTLED, DELIVERY_CONFIRMED, DELIVERY_PENDING, DELIVERY_COMPLETE } = SHIPPING_REQUEST_STATUS
+  const { shippingRequestStatus } = useContext(ActionsContainerContext)
+
+  switch (shippingRequestStatus) {
+    case IDLE:
+      return <TriggerEnquiryPlanner />
+    case ENQUIRY_PENDING:
+    case ENQUIRY_SETTLED:
+      return <CancelEnquiry />
+    case DELIVERY_COMPLETE:
+    case DELIVERY_PENDING:
+      return <ContactDetails />
+    case DELIVERY_CONFIRMED:
+      return <ConfirmDelivery />
+  }
+
+  return null
+}
+
+const EnquiryActions = () => {
+  const { shippingRequestStatus } = useContext(ActionsContainerContext)
+
+  if (shippingRequestStatus !== SHIPPING_REQUEST_STATUS.IDLE) return <ContactDetails />
+
+  return (
+    <>
+      <ContactDetails />
+      <CreateEnquiry />
+    </>
+  )
+}
+
 export const ActionsRecipient = () => {
   const [enquiryPlanner, setEnquiryPlanner] = useState(false)
   const shippingRequest = useSelector(getActiveRequestDetailsSelector)
   const shippingRequestStatus = shippingRequest?.attributes.status
-  const { IDLE, ENQUIRY_PENDING, ENQUIRY_SETTLED, DELIVERY_CONFIRMED, DELIVERY_PENDING, DELIVERY_COMPLETE } = SHIPPING_REQUEST_STATUS
-
-  const ShippingRequestActions = () => {
-    switch (shippingRequestStatus) {
-      case IDLE:
-        return <CreateEnquiry />
-      case ENQUIRY_PENDING:
-      case ENQUIRY_SETTLED:
-        return <CancelEnquiry />
-      case DELIVERY_COMPLETE:
-      case DELIVERY_PENDING:
-        return <ContactDetails />
-      case DELIVERY_CONFIRMED:
-        return <ConfirmDelivery />
-    }
-
-    return null
-  }
 
   return (
     <ActionsContainerContext.Provider
       value={{
+        shippingRequestStatus: shippingRequestStatus,
         shippingRequest: shippingRequest,
         callback: setEnquiryPlanner,
       }}
     >
-      {!enquiryPlanner && <ShippingRequestActions />}
+      {enquiryPlanner ? <EnquiryActions /> : <ShippingRequestActions />}
+      {}
     </ActionsContainerContext.Provider>
   )
 }

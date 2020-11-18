@@ -1,3 +1,3 @@
-export * from './shipping-request-status'
+export * from './shipping-request'
 export * from './user-role'
 export * from './routes'

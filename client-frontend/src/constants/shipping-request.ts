@@ -6,3 +6,11 @@ export const SHIPPING_REQUEST_STATUS = {
   DELIVERY_CONFIRMED: 'confirm success', //= > agent claims the package was delivered
   DELIVERY_COMPLETE: 'delivery successful', //= > recipient confirms everything is fine, and the package was delivered successfuly
 } as const
+
+export const SHIPPING_REQUEST_ROUTE_STATUS = {
+  AVAILABLE: 'available',
+  NOT_AVAILABLE: 'unavailable',
+  ENQUIRY_PENDING: 'pending enquiry',
+  ENQUIRY_REJECTED: 'enquiry rejected',
+  ENQUIRY_SETTLED: 'enquiry settled',
+} as const
