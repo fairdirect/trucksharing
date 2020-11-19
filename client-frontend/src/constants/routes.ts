@@ -8,4 +8,7 @@ export const ROUTES = {
     FREIGHT_BILLS: '/agent/freight-bills',
     TRANSPORT_ORDERS: '/agent/transport-orders',
   },
+  VISITOR: {
+    ROOT: '/',
+  },
 } as const

@@ -9,6 +9,7 @@ import { ROUTES, SHIPPING_REQUEST_STATUS } from '../../constants'
 const ActionsContainerContext = createContext({} as any)
 
 const TriggerEnquiryPlanner = () => {
+  // TODO: Add useCallback to functions passed as props or context
   const history = useHistory()
   const {
     shippingRequest: { id },
