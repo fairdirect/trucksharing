@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { getShippingRequestsSelector } from '../../store/recipient-selectors'
 import { useDispatch, useSelector } from 'react-redux'
 import { IShippingRequest } from './types'
@@ -6,6 +6,7 @@ import { fetchShippingRequests } from './action-creators'
 import { Table, ShippingRequestsItem } from '../../components'
 import { setActiveShippingRequest } from '../../features/active-shipping-request/redux-slice'
 import { useTableStyles } from './styles'
+import { useAuth } from '../../utils/hooks'
 
 const tableHeaders = [
   'Status',
@@ -20,11 +21,13 @@ const tableHeaders = [
 ]
 
 const ShippingRequestsContainer: React.FunctionComponent = () => {
+  const { user } = useAuth()
   const classes = useTableStyles()
   const dispatch = useDispatch()
-  const getAllRequests = useCallback(() => {
-    dispatch(fetchShippingRequests())
-  }, [dispatch])
+  const getAllRequests = () => {
+    dispatch(fetchShippingRequests(user.token))
+  }
+  // cache response
   const shippingRequests: IShippingRequest[] = useSelector(getShippingRequestsSelector)
   const handleItemClick = (id: string) => {
     dispatch(setActiveShippingRequest(id))
@@ -32,7 +35,7 @@ const ShippingRequestsContainer: React.FunctionComponent = () => {
 
   useEffect(() => {
     getAllRequests()
-    // eslint-disable-next-line => for some reason my eslint settigns are ignored
+    // eslint-disable-next-line
   }, [])
 
   const shippingRequestsList = shippingRequests.map(({ id, attributes }: IShippingRequest, index) => (

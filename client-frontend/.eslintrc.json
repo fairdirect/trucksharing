@@ -23,7 +23,7 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react-hooks/rules-of-hooks": "warn",
-    "react-hooks/exhaustive-deps": 0,
+    "react-hooks/exhaustive-deps": "off",
     "no-tabs": 0,
     "no-shadow": 0,
     "@typescript-eslint/no-shadow": ["error"],

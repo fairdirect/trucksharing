@@ -4,7 +4,7 @@ export const ROUTES = {
     ENQUIRY_PLANNER: '/recipient/create-enquiry/:shippingRequestId',
   },
   AGENT: {
-    ROUTES: '/agent/routes',
+    ROUTES_LIST: '/agent/routes',
     FREIGHT_BILLS: '/agent/freight-bills',
     TRANSPORT_ORDERS: '/agent/transport-orders',
   },

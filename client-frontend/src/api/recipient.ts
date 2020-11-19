@@ -1,12 +1,17 @@
-import recipientInstance from './recipient-instance'
+import { apiInstance } from './instances'
+import { API_ROUTES } from '../constants'
 
 // TODO: add pagination support
-// TODO: add TS types once the response shape settles
-export const getAllShippingRequests = async () => {
-	try {
-		const response = await recipientInstance.get('/shipping_requests')
-		return response.data.data
-	} catch (error) {
-		throw new Error(error)
-	}
+// FIXME: remove dummy token
+export const getAllShippingRequests = async (token: string) => {
+  try {
+    const response = await apiInstance.get(API_ROUTES.RECIPIENT.SHIPPING_REQUESTS, {
+      headers: {
+        Authorisation: token,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    throw new Error(error)
+  }
 }
