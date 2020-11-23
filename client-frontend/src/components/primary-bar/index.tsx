@@ -1,12 +1,30 @@
 import React, { FC } from 'react'
 import { fade, createStyles, Theme, makeStyles } from '@material-ui/core'
 import { AppBar, Toolbar, IconButton, Typography, Box, InputBase } from '@material-ui/core'
-import { AccountCircle as IconAccount, Search as IconSearch, FilterList as IconFilters } from '@material-ui/icons'
+import {
+  AccountCircle as IconAccount,
+  Search as IconSearch,
+  FilterList as IconFilters,
+  PowerSettingsNew as IconOnOff,
+} from '@material-ui/icons'
 import { BtnPin } from '../btn-pin'
 import UserActionsContainer from '../../features/user-actions-container'
+import { useAuth } from '../../utils/hooks'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    buttonLogin: {
+      backgroundColor: theme.palette.success.main,
+      '&:hover': {
+        backgroundColor: theme.palette.success.dark,
+      },
+    },
+    buttonLogout: {
+      backgroundColor: theme.palette.error.main,
+      '&:hover': {
+        backgroundColor: theme.palette.error.dark,
+      },
+    },
     search: {
       position: 'relative',
       alignItems: 'center',
@@ -57,10 +75,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const PrimaryBar: FC = () => {
   const classes = useStyles()
+  const { user, signOut, signIn } = useAuth()
+  const handleClickSwitch = () => {
+    user.authorized ? signOut() : signIn()
+  }
 
   return (
     <AppBar>
       <Toolbar>
+        <IconButton
+          onClick={handleClickSwitch}
+          size="small"
+          color="inherit"
+          className={`${user.authorized ? classes.buttonLogout : classes.buttonLogin}`}
+        >
+          <IconOnOff />
+        </IconButton>
+
         <IconButton color="inherit">
           <IconAccount />
         </IconButton>

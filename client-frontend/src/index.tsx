@@ -10,13 +10,13 @@ const render = () => {
   const App = require('./features/app').default
 
   ReactDOM.render(
-    <Provider store={store}>
-      <ProvideAuth>
-        <Router basename="transport">
+    <Router basename="transport">
+      <Provider store={store}>
+        <ProvideAuth>
           <App />
-        </Router>
-      </ProvideAuth>
-    </Provider>,
+        </ProvideAuth>
+      </Provider>
+    </Router>,
     document.getElementById('root'),
   )
 }

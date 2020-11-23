@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useContext, createContext, FC } from 'react'
+import { useHistory } from 'react-router-dom'
+import { ROUTES } from '../../constants'
+
 interface IAuthContext {
   [key: string]: any
 }
@@ -19,24 +22,31 @@ export const AuthContext = createContext<IAuthContext>({})
 
 // TODO: Add cookie parse and get token from cookie
 const useProvideAuth = () => {
+  const history = useHistory()
   const [user, setUser] = useState<IUserInfo>(initialUser)
-
-  // FIXME: Replace with real token from cookie
-  const token = process.env.REACT_APP_DUMMY_TOKEN_RECIPIENT
+  const fakeToken = process.env.REACT_APP_DUMMY_TOKEN_RECIPIENT
+  const [token, setToken] = useState(fakeToken)
 
   const signIn = async () => {
     // TODO: ... add logic to validate token
+    console.log('Signing in')
+    setToken(fakeToken)
     const fakeResponse = {
-      role: token ? 'recipient' : '',
-      authorized: true,
-      token: token ?? '',
+      role: 'recipient',
+      authorized: Boolean(fakeToken),
+      token: fakeToken ?? '',
     }
+
     setUser(fakeResponse)
 
     return fakeResponse
   }
 
-  const signOut = () => setUser(initialUser)
+  const signOut = () => {
+    setUser(initialUser)
+    setToken(undefined)
+    history.push(ROUTES.VISITOR.ROOT)
+  }
 
   useEffect(() => {
     if (!user.authorized && token) signIn()
